@@ -1,0 +1,36 @@
+server:
+  address: localhost
+  port: 8083
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mart
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  security:
+    user:
+      name: admin
+      password: admin
+  logging:
+    level:
+      root: INFO
+      com.martsystem: DEBUG
+      org.springframework.web: INFO
+      org.hibernate: INFO
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
