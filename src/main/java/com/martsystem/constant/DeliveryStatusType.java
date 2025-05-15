@@ -1,6 +1,6 @@
 package com.martsystem.constant;
 
-enum DistributionStatus {
+public enum DeliveryStatusType {
 	PENDING("처리대기"),
 	PROCESSING("처리중"),
 	SHIPPED("배송중"),
@@ -8,11 +8,8 @@ enum DistributionStatus {
 
 	private final String description;
 
-	DistributionStatus(String description) {
-		this.description = description;
-	}
 
-	public String getDescription() {
-		return description;
+	DeliveryStatusType(String description) {
+		this.description = description;
 	}
 }
