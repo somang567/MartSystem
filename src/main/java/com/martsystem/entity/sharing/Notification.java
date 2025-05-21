@@ -12,6 +12,7 @@ public class Notification {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long notificationId;
 
+
 	@Column(nullable = false)
 	private String message;
 
