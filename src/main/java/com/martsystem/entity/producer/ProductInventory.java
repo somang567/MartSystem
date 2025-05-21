@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+// 생산자 마이페이지용 엔티티
 public class ProductInventory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,8 +15,12 @@ public class ProductInventory {
 	@JoinColumn(name = "productId" , nullable = false)
 	private Product product;
 
-	@Column(nullable = false , name = "Quantity")
+	@Column(nullable = false , name = "savedProductQuantity")
 	private Integer savedProductQuantity;
+
+	@Column(nullable = false)
+	private String Location;
+
 
 
 

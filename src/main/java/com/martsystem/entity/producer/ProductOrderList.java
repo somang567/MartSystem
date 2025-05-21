@@ -17,10 +17,12 @@ public class ProductOrderList {
 	private Product product;
 
 	@Column(nullable = false)
+	private LocalDateTime orderDate;
+
+	@Column(nullable = false , name = "orderquantity")
 	private int orderQuantity;
 
-	@Column(nullable = false)
-	private LocalDateTime orderDate;
+
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
