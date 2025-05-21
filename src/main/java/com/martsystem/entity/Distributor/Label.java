@@ -30,11 +30,6 @@ public class Label {
 	@Column(name = "alertStatus" , nullable = false)
 	private Boolean alertStatus;
 
-	//
-	@Column(name = "total_revenue")
-	private BigDecimal total_revenue;
-
-
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
 
