@@ -1,18 +1,19 @@
 package com.martsystem.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
-
-import java.lang.module.FindException;
 
 @Controller
 @RequiredArgsConstructor
-public class MartSystemController {
-	@GetMapping("/test")
+public class MartController {
+	@GetMapping("/  ")
 	public String test(){
 		return "index";
+	}
+
+	@GetMapping("/mart")
+	public String testMart(){
+		return "mart/martHome";
 	}
 }

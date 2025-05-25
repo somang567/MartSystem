@@ -26,9 +26,8 @@ public class Label {
 	@Column(name = "label_content", nullable = false)
 	private String labelContent;
 
-	@Enumerated(EnumType.STRING)
 	@Column(name = "alertStatus" , nullable = false)
-	private Boolean alertStatus;
+	private boolean alertStatus;
 
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
