@@ -1,0 +1,75 @@
+/* 브랜드 로고 */
+.navbar-brand {
+    flex-grow: 0;
+    font-size: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-family: 'PartialSansKR', sans-serif;
+
+}
+
+/* 모두의 마트 로고 트렌지션 애니메이션 */
+
+.skewed-logo {
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'PartialSansKR', sans-serif;
+    font-size: 2rem;
+    }
+/* -------------------------------------------------------------------- */
+
+/* 가운데 메뉴 링크 */
+.navbar-nav .nav-link {
+    font-size: 2rem;
+    font-weight: 500;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* 헤더 전체 폭을 제한하는 컨테이너 */
+.headerContainer {
+    width: 90%;                 /* 캐러셀에 맞추기 위해 85% → 90%로 조정 */
+    margin: 0 auto;
+    padding: 0 1rem;            /* 좌우 여백 주기 */
+    position: relative;         /* 정렬 기준 요소로 활용 가능 */
+}
+
+/* 로그인 버튼 (기본: 연한 회색 테두리, 검정 글씨) */
+.btn-outline-dark {
+    border: 1px solid #999;   /* 회색 테두리 */
+    color: #333;              /* 어두운 회색 텍스트 */
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-dark:hover {
+    background-color: #ffd700;  /* 노란색 */
+    color: white;
+    border: 1px solid #999;
+}
+
+/* 회원가입 버튼 (기본: 검정 배경, 흰 텍스트) */
+.btn-dark {
+    background-color: white;
+    color: #333;
+    border: 1px solid #999;     /* 회색 테두리 추가 */
+    transition: all 0.3s ease;
+}
+.btn-dark:hover{
+    background-color: #ffd700;  /* 노란색 */
+    color: white;
+    border: 1px solid #999;
+}
+
+/* 드롭다운 토글을 hover했을 때 메뉴 보이기 */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* 메뉴가 부드럽게 나타나도록 애니메이션 (선택) */
+.dropdown-menu {
+    margin-top: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}

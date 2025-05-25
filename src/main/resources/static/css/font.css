@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Paperlogy';
+    src: url('static/fonts/Paperlogy-8ExtraBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-paperlogy {
+    font-family: 'Paperlogy', sans-serif;
+}
+
+@font-face {
+    font-family: 'PartialSansKR';
+    src: url("static/fonts/PartialSansKR-Regular.otf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-partialSansKR {
+    font-family: 'PartialSansKR', sans-serif;
+}
