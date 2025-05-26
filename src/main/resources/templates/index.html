@@ -1,56 +1,60 @@
 <!-- templates/index.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
 <head>
-    <meta charset="UTF-8">
     <title>모두의 마트</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/mainHome.css}">
-    <link rel="stylesheet" th:href="@{/css/font.css}">
+
+    <th:block layout:fragment="css">
+        <!-- 추가 css 필요 시 여기에 -->
+    </th:block>
 </head>
+
 <body>
+<!-- ✅ 본문 콘텐츠 영역만 fragment 지정 -->
+<div layout:fragment="content">
+    <div class="carouselContainer">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <!-- 인디케이터 -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
 
-<!-- 헤더 -->
-<div th:replace="fragments/header :: header"></div>
+            <!-- 캐러셀 본문 -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/images/Night7.png" class="d-block w-100" alt="슬라이드1">
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/Night8.png" class="d-block w-100" alt="슬라이드2">
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/Night9.png" class="d-block w-100" alt="슬라이드3">
+                </div>
+            </div>
 
-<!-- 캐러셀 전체를 container로 감싸기 -->
-<div class="carouselContainer">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-
-        <!-- 인디케이터 (하단 점) -->
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <!-- 좌우 버튼 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-
-        <!-- 슬라이드 이미지 -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/images/Night7.png" class="d-block w-100" alt="슬라이드1">
-            </div>
-            <div class="carousel-item">
-                <img src="/images/Night8.png" class="d-block w-100" alt="슬라이드2">
-            </div>
-            <div class="carousel-item">
-                <img src="/images/Night9.png" class="d-block w-100" alt="슬라이드3">
-            </div>
-        </div>
-
-        <!-- 좌우 화살표 -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JS 삽입 지점 -->
+<th:block layout:fragment="script"></th:block>
 </body>
 </html>

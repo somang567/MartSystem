@@ -1,46 +1,43 @@
-<nav class="navbar navbar-expand-lg bg-white py-3 shadow-sm" th:fragment="header">
-    <div class="headerContainer d-flex justify-content-between align-items-center">
+<nav class="navbar bg-white py-3 shadow-sm" th:fragment="header">
+    <div class="headerWrapper">
+        <div class="headerContainer">
+            <div class="menu-left">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">마트 찾기</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">내 주변 마트</a></li>
+                        <li><a class="dropdown-item" href="#">전체 마트</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">상품 보기</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">베스트 상품</a></li>
+                        <li><a class="dropdown-item" href="#">신상품</a></li>
+                    </ul>
+                </li>
+            </div>
 
-        <!-- 브랜드 (왼쪽) -->
-        <a class="navbar-brand skewed-logo fs-3" th:href="@{/}">모두의 마트</a>
+            <a class="navbar-brand3" href="#">모두의 마트</a>
 
-        <ul class="nav justify-content-center flex-grow-1">
-
-            <li class="nav-item">
-                <a class="nav-link text-dark" th:href="@{/}">마켓 소개</a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    마트 찾기
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" th:href="@{/marts/local}">내 주변 마트</a></li>
-                    <li><a class="dropdown-item" th:href="@{/marts/all}">전체 마트</a></li>
-                </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    상품 보기
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" th:href="@{/products/best}">베스트 상품</a></li>
-                    <li><a class="dropdown-item" th:href="@{/products/new}">신상품</a></li>
-                </ul>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link text-dark" th:href="@{/contact}">문의하기</a>
-            </li>
-        </ul>
-
-
-        <!-- 오른쪽 아이콘 / 버튼 -->
-        <div class="d-flex gap-2">
-            <a th:href="@{/login}" class="btn btn-outline-dark">로그인</a>
-            <a th:href="@{/signup}" class="btn btn-dark">회원가입</a>
+            <div class="menu-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">고객센터</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">공지사항</a></li>
+                        <li><a class="dropdown-item" href="#">자주묻는 질문</a></li>
+                        <li><a class="dropdown-item" href="#">문의하기</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">내 주변 가격비교</a>
+                </li>
+            </div>
         </div>
 
+        <div class="auth-buttons">
+            <a href="#" class="btn-outline-dark">로그인</a>
+            <a href="#" class="btn-dark">회원가입</a>
+        </div>
     </div>
 </nav>

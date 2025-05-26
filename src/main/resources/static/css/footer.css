@@ -1,0 +1,52 @@
+/* 전체 푸터 영역 공통 */
+footer {
+    font-family: 'Paperlogy', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* 상단 메뉴 (회사소개 | 채용안내 등) */
+.footer-menu a {
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.footer-menu a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* 로고 이미지 크기 조정 */
+footer img {
+    height: 40px;
+    object-fit: contain;
+}
+
+/* 회사 정보 및 에스크로 문단 스타일 */
+footer p {
+    font-size: 0.875rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+}
+
+/* 강조 텍스트 및 링크 */
+footer p.fw-bold {
+    font-size: 0.95rem;
+}
+
+footer a.text-decoration-underline {
+    color: #333;
+    text-decoration: underline;
+}
+
+footer a.text-decoration-underline:hover {
+    color: #000;
+}
+
+/* 하단 고지 영역 */
+.footer-bottom {
+    font-size: 0.8rem;
+    color: #777;
+}
