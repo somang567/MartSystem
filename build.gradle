@@ -33,6 +33,7 @@ dependencies {
 
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 
     compileOnly 'org.projectlombok:lombok'
