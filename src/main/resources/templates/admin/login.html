@@ -14,36 +14,56 @@
     <div class="container d-flex justify-content-center align-items-center min-vh-100 p-0">
         <div class="login-container">
             <div class="logo-section text-center mb-4">
-                <h1>모두의 마트</h1>
-                <p>모두가 즐거운 마트 모두의 마트</p>
+                <h1 style="font-family: 'Paperlogy', sans-serif">모두의 마트</h1>
+                <p style="font-family: 'Paperlogy', sans-serif; margin-bottom: 6rem">모두가 즐거운 마트 모두의 마트</p>
             </div>
 
             <form th:action="@{/login}" method="post">
                 <div class="mb-3 text-start">
                     <label for="email" class="form-label">이메일 주소</label>
-                    <input type="email" class="form-control login-placeholder" id="email" name="username" placeholder="예) everyone@mart.com">
+                    <input type="email" class="form-control" id="email" name="username" placeholder="예) everyone@mart.com"
+                           required oninvalid="this.setCustomValidity('올바른 이메일 형식을 입력해주세요')" style="--bs-secondary-color: #a49d9d;">
                 </div>
 
                 <div class="mb-4 text-start">
                     <label for="password" class="form-label">비밀번호</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="영어 + 숫자 + 특수문자 조합"
+                    style="--bs-secondary-color: #a49d9d">
                 </div>
 
-                <button type="button" class="btn btn-light btn-login">로그인</button>
+                <button type="button" class="btn btn-light" style="--bs-btn-padding-x: 15rem; --bs-btn-padding-y: 0.8rem;
+                --bs-btn-border-color: #c6c6c6; --bs-btn-border-width: 0.12rem;--bs-btn-font-family: 'Paperlogy'; --bs-btn-font-size: 1.2rem;
+                --bs-btn-bg: white; --bs-btn-hover-bg: #d3d3d3; --bs-btn-hover-color: #5f6368; margin-bottom: 1rem;">로그인</button>
             </form>
 
             <div class="d-flex justify-content-center gap-3 mb-4 link-group">
-                <a th:href="@{/join}">이메일 가입</a><span>|</span>
-                <a th:href="@{/find-email}">이메일 찾기</a><span>|</span>
-                <a th:href="@{/find-password}">비밀번호 찾기</a>
+                <a th:href="@{/join}" style="color: #626262; text-decoration: none; margin: 0 auto; font-size: 1.05rem">이메일 가입</a>
+                <a th:href="@{/find-email}" style="color: #626262; text-decoration: none;margin: 0 auto; font-size: 1.05rem;">이메일 찾기</a>
+                <a th:href="@{/find-password}"style="color: #626262; text-decoration: none; margin: 0 auto; font-size: 1.05rem;">비밀번호 찾기</a>
             </div>
 
-            <div class="social-login-buttons mt-4 d-flex flex-column gap-2">
-                <button type="button" class="btn-social-login" onclick="alert('네이버 로그인 처리')">
-                    <span class="social-icon-naver">N</span>네이버로 로그인
+            <div class="social-login-buttons mt-4 d-grid gap-2">
+                <button type="button" class="btn btn-light" onclick="alert('Google 로그인')"
+                        style="--bs-btn-padding-x: 1rem; --bs-btn-padding-y: 0.8rem;--bs-btn-border-color: #c6c6c6;
+                        --bs-btn-border-width: 0.12rem;--bs-btn-font-family: 'Paperlogy'; --bs-btn-font-size: 1.2rem;
+                        --bs-btn-bg: white; --bs-btn-hover-bg: #d3d3d3; --bs-btn-hover-color: #5f6368">
+                    <img src="/images/google.svg" alt="Google" style="width: 2.9rem; height: 2rem;padding-right: 0.5rem">
+                    Google 로그인
                 </button>
-                <button type="button" class="btn-social-login" onclick="alert('Apple 로그인 처리')">
-                    <span class="social-icon-apple">●</span>Apple로 로그인
+
+                <button type="button" class="btn btn-light" onclick="alert('Naver 로그인')"
+                        style="--bs-btn-padding-x: 1rem; --bs-btn-padding-y: 0.8rem; --bs-btn-border-color: #c6c6c6;
+                        --bs-btn-border-width: 0.12rem;--bs-btn-font-family: 'Paperlogy'; --bs-btn-font-size: 1.2rem;
+                        --bs-btn-bg: white; --bs-btn-hover-bg: #d3d3d3; --bs-btn-hover-color: #5f6368">
+                    <img src="/images/naver_icon.svg" alt="naver" style="width: 2.9rem; height: 2rem;padding-right: 1rem">
+                    Naver 로그인
+                </button>
+                <button type="button" class="btn btn-light" onclick="alert('Apple 로그인')"
+                        style="--bs-btn-padding-x: 1rem; --bs-btn-padding-y: 0.8rem; --bs-btn-border-color: #c6c6c6;
+                        --bs-btn-border-width: 0.12rem;--bs-btn-font-family: 'Paperlogy'; --bs-btn-font-size: 1.2rem;
+                        --bs-btn-bg: white; --bs-btn-hover-bg: #d3d3d3; --bs-btn-hover-color: #5f6368">
+                    <img src="/images/apple.svg" alt="apple" style="width: 3rem; height: 2rem;padding-right: 0.8rem">
+                    Apple 로그인
                 </button>
             </div>
         </div>
