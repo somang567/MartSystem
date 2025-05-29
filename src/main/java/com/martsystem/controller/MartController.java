@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class MartController {
-	@GetMapping("/  ")
+	@GetMapping("/")
 	public String test(){
 		return "index";
 	}
