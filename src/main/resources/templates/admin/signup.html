@@ -1,20 +1,124 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layouts/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<!-- CSS 삽입 -->
 <th:block layout:fragment="css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin/signup.css}">
 </th:block>
 
-<!-- 본문 영역 -->
 <th:block layout:fragment="content">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 p-0">
+        <div class="signup-container">
+            <div class="logo-section text-center mb-4">
+                <h1>모두의 마트</h1>
+                <p>회원가입 약관동의</p>
+            </div>
 
+            <form id="termsForm" th:action="@{/join/terms}" method="post">
+                <div class="form-check mb-4 all-agree-section">
+                    <input class="form-check-input" type="checkbox" id="chkAll" name="chkAll">
+                    <label class="form-check-label" for="chkAll">
+                        모든 약관에 동의합니다 (필수 및 선택 포함)
+                    </label>
+                </div>
+
+                <hr class="mb-4">
+
+                <div class="term-item mb-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="form-check">
+                            <input class="form-check-input chk-required" type="checkbox" id="termsOfService" name="termsOfService" value="true">
+                            <label class="form-check-label" for="termsOfService">
+                                서비스 이용 약관 동의 <span class="required">(필수)</span>
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-link view-terms-btn"
+                                data-bs-toggle="collapse" data-bs-target="#collapseServiceTerms"
+                                aria-expanded="false" aria-controls="collapseServiceTerms"> 내용 보기
+                        </button>
+                    </div>
+                    <div class="collapse terms-content mt-3" id="collapseServiceTerms">
+                        <div class="card card-body">
+                            <h2>모두의 마트 서비스 이용 약관</h2>
+                            <p>제1조 (목적)</p>
+                            <p>본 약관은 모두의 마트(이하 "회사"라 함)가 제공하는 제반 서비스의 이용과 관련하여 회사와 회원 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
+                            <p>제2조 (용어의 정의)</p>
+                            <ul>
+                                <li>"서비스"라 함은 회사가 제공하는 모든 인터넷 기반 서비스를 의미합니다.</li>
+                                <li>"회원"이라 함은 본 약관에 따라 회사와 이용계약을 체결하고 회사가 제공하는 서비스를 이용하는 자를 의미합니다.</li>
+                            </ul>
+                            <p>...</p>
+                            <p>(실제 약관 내용이 여기에 길게 들어갑니다. 필요시 서버에서 AJAX로 로드할 수 있습니다.)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="term-item mb-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="form-check">
+                            <input class="form-check-input chk-required" type="checkbox" id="privacyPolicy" name="privacyPolicy" value="true">
+                            <label class="form-check-label" for="privacyPolicy">
+                                개인정보 처리방침 동의 <span class="required">(필수)</span>
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-link view-terms-btn"
+                                data-bs-toggle="collapse" data-bs-target="#collapsePrivacyPolicy"
+                                aria-expanded="false" aria-controls="collapsePrivacyPolicy"> 내용 보기
+                        </button>
+                    </div>
+                    <div class="collapse terms-content mt-3" id="collapsePrivacyPolicy">
+                        <div class="card card-body">
+                            <h2>모두의 마트 개인정보 처리방침</h2>
+                            <p>모두의 마트는 개인정보 보호법 등 관련 법령을 준수하여 개인정보를 처리하고 있습니다.</p>
+                            <p>1. 개인정보의 수집 및 이용 목적</p>
+                            <p>회사는 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 개인정보 보호법에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
+                            <ul>
+                                <li>회원 가입 및 관리</li>
+                                <li>서비스 제공 및 요금 정산</li>
+                                <li>불만 처리 등 민원 처리</li>
+                            </ul>
+                            <p>...</p>
+                            <p>(실제 개인정보 처리방침 내용이 여기에 길게 들어갑니다.)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="term-item mb-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="form-check">
+                            <input class="form-check-input chk-optional" type="checkbox" id="marketingConsent" name="marketingConsent" value="true">
+                            <label class="form-check-label" for="marketingConsent">
+                                마케팅 정보 수신 동의 <span class="optional">(선택)</span>
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-link view-terms-btn"
+                                data-bs-toggle="collapse" data-bs-target="#collapseMarketingConsent"
+                                aria-expanded="false" aria-controls="collapseMarketingConsent"> 내용 보기
+                        </button>
+                    </div>
+                    <div class="collapse terms-content mt-3" id="collapseMarketingConsent">
+                        <div class="card card-body">
+                            <h2>마케팅 정보 수신 동의 (선택)</h2>
+                            <p>모두의 마트에서 제공하는 다양한 이벤트, 할인 정보, 신규 상품 소식 등을 수신하시려면 동의해주세요.</p>
+                            <p>수신 동의 시, 이메일, SMS 등을 통해 마케팅 정보를 받아보실 수 있습니다.</p>
+                            <p>본 동의는 선택 사항이며, 동의하지 않으셔도 회원가입 및 서비스 이용에는 지장이 없습니다. 언제든지 수신 거부할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-agree mt-4" disabled>동의하고 가입하기</button>
+                <button type="button" class="btn btn-secondary btn-cancel mt-2" onclick="location.href='/'">취소</button>
+            </form>
+        </div>
+    </div>
 </th:block>
 
-
-<!-- Script 영역 -->
 <th:block layout:fragment="script">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script th:src="@{/js/signup.js}"></script>
 </th:block>
+
+</html>

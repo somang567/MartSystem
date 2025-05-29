@@ -74,21 +74,18 @@ html, body {
     border-color: #222;
     outline: none;
     background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.1);
 }
-.login-placeholder{
-    color: blue; !important;
-}
+
 
 /* 하단 링크 그룹 */
 .link-group {
-    margin-top: 25px !important;
+    margin-top: 30px !important;
     font-size: 0.85rem;
     color: #666;
 }
 
 .link-group a {
-    color: #555;
+    color: black;
     text-decoration: none;
     transition: color 0.2s;
     padding: 0 8px;
@@ -96,101 +93,15 @@ html, body {
 
 .link-group a:hover {
     color: #222;
-    text-decoration: underline;
+    text-decoration: none;
+
 }
 
 .link-group span {
     color: #ddd;
-}
-
-/* 소셜 로그인 섹션 */
-.social-login-buttons {
-    margin-top: 30px !important;
-    position: relative;
-    padding-top: 20px;
-}
-
-.social-login-buttons:before {
-    content: "또는";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    padding: 0 15px;
-    font-size: 0.85rem;
-    color: #888;
-}
-.btn-light{
-    border: 2px solid #333333;
-    width: 2rem;
-}
-.social-login-buttons:after {
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background-color: #e0e0e0;
-    z-index: -1;
-}
-
-/* 소셜 로그인 버튼 */
-.btn-social-login {
-    width: 100%;
-    padding: 14px 0;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    background-color: #fff;
-    color: #333;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size:0.85rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.btn-social-login:hover {
-    background-color: #f7f7f7;
-    border-color: #d0d0d0;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* 네이버 버튼 */
-.btn-social-login:first-child {
-    border-color: #03C75A;
-}
-
-.btn-social-login:first-child:hover {
-    background-color: #f0fff7;
-}
-
-/* 애플 버튼 */
-.btn-social-login:last-child {
-    border-color: #000;
-}
-
-.btn-social-login:last-child:hover {
-    background-color: #f9f9f9;
-}
-
-/* 소셜 로고 아이콘 */
-.social-icon-naver {
-    font-weight: bold;
-    color: #03C75A;
-    font-size: 1.2rem;
-}
-
-.social-icon-apple {
-    font-weight: bold;
-    color: #000;
-    font-size: 1.2rem;
 }
 
 /* 반응형 디자인 */
