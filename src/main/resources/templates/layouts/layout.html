@@ -5,14 +5,18 @@
     <meta charset="UTF-8">
     <title layout:title-pattern="$CONTENT_TITLE | 모두의 마트">모두의 마트</title>
 
-    <!-- ✅ Bootstrap 먼저 -->
+
+    <!-- ✅ Bootstrap 먼저  (부모 css)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- ✅ 공통 CSS -->
-    <link rel="stylesheet" th:href="@{/css/font.css}">
-    <link rel="stylesheet" th:href="@{/css/layout/header.css}">
-    <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
-    <link rel="stylesheet" th:href="@{/css/mainHome.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout/footer.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainHome.css}">
+
+        <!--    자식 css가 들어갈 자리 -->
+    <th:block layout:fragment="css"></th:block>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
