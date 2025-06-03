@@ -10,8 +10,19 @@ public class AdminContorller {
 		return "admin/login";
 	}
 
-	@GetMapping("/signup")
-	public String signUp(){
+
+	@GetMapping("/register")
+	public String register(){
+		return "admin/userTypeSignup";
+	}
+
+	@GetMapping("/register/signupAgree")
+	public String signUpAgree(){
 		return "admin/signup";
+	}
+
+	@GetMapping("/register/userInfoPersonal")
+	public String userInfoPersonal(){
+		return "admin/userInfoPersonal";
 	}
 }

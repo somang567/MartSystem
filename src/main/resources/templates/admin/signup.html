@@ -10,27 +10,36 @@
 <th:block layout:fragment="content">
     <div class="container d-flex justify-content-center align-items-center min-vh-100 p-0">
         <div class="signup-container">
-            <ol class="step-wrap mb-5">
-            <li class="active">
-                <span>
-                        <em class="sr-only">현재단계</em>
-                        <i class="step"></i>
-                        <span class="step-tit">약관 동의</span>
-                    </span>
-            </li>
-                <li>
-                    <span>
-                        <i class="step"></i>
-                        <span class="step-tit">정보 입력</span>
-                    </span>
+            <ol class="step-wrap new-design mb-5">
+                <li class="active">
+                    <span class="step-label-top">Step 1</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">가입유형 선택</span>
+                </li>
+                <li class="active"> <span class="step-label-top">Step 2</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">약관동의</span>
                 </li>
                 <li>
-                    <span>
-                        <i class="step"></i>
-                        <span class="step-tit">가입 완료</span>
-                    </span>
+                    <span class="step-label-top">Step 3</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">개인정보 입력</span>
+                </li>
+                <li>
+                    <span class="step-label-top">Step 4</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">가입완료</span>
                 </li>
             </ol>
+
             <div class="logo-section text-center mb-4">
                 <h1 style="font-family: 'Paperlogy', sans-serif">모두의 마트</h1>
                 <p style="font-family: 'Paperlogy', sans-serif; margin-bottom: 6rem">회원가입 약관동의</p>
@@ -149,7 +158,7 @@
 
                 <div class="d-flex justify-content-end mt-4">
                     <button type="submit" id="btnNext" class="btn btn-light me-2" disabled>동의하고 다음으로</button>
-                    <button type="button" class="btn btn-light btn-cancel" onclick="location.href='/'">취소</button>
+                    <button type="button" class="btn btn-light btn-cancel" onclick="location.href='/userTypeSignup.html'">취소</button>
                 </div>
             </form>
         </div>

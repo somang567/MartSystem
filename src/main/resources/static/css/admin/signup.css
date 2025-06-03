@@ -32,109 +32,122 @@ html, body {
     overflow-y: auto;
     box-sizing: border-box;
 }
+/* ★★★ 새로운 스텝 인디케이터 CSS 시작 (이전 스텝 CSS는 삭제 또는 주석 처리) ★★★ */
 
-/* ★★★ 스텝 관련 CSS 시작 ★★★ */
-.step-wrap {
+.step-wrap.new-design { /* 새로운 디자인을 위한 클래스 선택자 */
     list-style: none;
     padding: 0;
-    margin: 0 auto; /* 중앙 정렬 */
+    margin: 0 auto 50px auto; /* 중앙 정렬 및 하단 마진 */
     display: flex;
     justify-content: center; /* 스텝 항목들 중앙 정렬 */
-    gap: 15px; /* 각 단계 간 간격 */
-    width: 100%; /* 부모 너비에 맞춰 */
-    max-width: 600px; /* 스텝 영역 자체의 최대 너비 제한 (선택 사항) */
+    width: 100%;
+    max-width: 800px; /* 전체 스텝 영역의 최대 너비 (필요시 조정) */
+    position: relative; /* 연결선 기준점 */
 }
 
-.step-wrap li {
+.step-wrap.new-design li {
     display: flex;
-    flex-direction: column; /* 아이콘과 텍스트를 세로로 정렬 */
+    flex-direction: column;
     align-items: center; /* 가로 중앙 정렬 */
     text-align: center;
-    color: #999; /* 기본 텍스트 색상 (아직 오지 않은 단계) */
-    position: relative; /* 단계 구분선 위치 지정을 위해 */
-    flex-grow: 1; /* 스텝 항목들이 공간을 균등하게 차지하도록 */
+    position: relative;
+    flex: 1; /* flex-grow, flex-shrink, flex-basis를 1로 설정하여 균등 분배 */
+    padding: 0 10px; /* 각 스텝 항목 내부의 좌우 패딩 */
 }
 
-/* 단계 구분선 (오른쪽 선) - 기본 회색 */
-/* 이 선은 '현재 단계'나 '아직 오지 않은 단계' 뒤에 오는 선의 색상 */
-.step-wrap li:not(:last-child)::after {
+/* 상단 라벨 (Step 1, Step 2, ...) */
+.step-wrap.new-design .step-label-top {
+    font-size: 0.9rem;
+    color: #888; /* 회색 */
+    margin-bottom: 5px; /* 라벨과 아이콘 사이 간격 */
+    white-space: nowrap;
+}
+
+/* 원형 아이콘 영역 (선과의 정렬을 위해 래퍼 div 사용) */
+.step-wrap.new-design .step-icon-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* 선이 이 영역에서 시작/끝나도록 */
+    margin-bottom: 10px; /* 아이콘 영역과 하단 라벨 사이 간격 */
+}
+
+/* 원형 아이콘 자체 */
+.step-wrap.new-design .step-circle {
+    display: inline-block;
+    width: 40px; /* 원의 크기 */
+    height: 40px; /* 원의 크기 */
+    border: 1px solid #ccc; /* 회색 테두리 */
+    border-radius: 50%;
+    background-color: #fff; /* 흰색 배경 */
+    flex-shrink: 0; /* 공간이 부족해도 줄어들지 않음 */
+    z-index: 1; /* 선 위에 오도록 */
+}
+
+/* 하단 라벨 (1단계 명칭, ...) */
+.step-wrap.new-design .step-label-bottom {
+    font-size: 0.95rem;
+    color: #666; /* 회색 */
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 연결선 스타일 */
+/* 각 li의 step-icon-area의 양쪽에 선을 그려 중앙을 연결 */
+.step-wrap.new-design .step-icon-area::before,
+.step-wrap.new-design .step-icon-area::after {
     content: '';
-    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     height: 1px;
     background-color: #ccc; /* 기본 회색 선 */
-    position: absolute;
-    top: 15px; /* ✅ 스텝 번호 원의 정확한 중앙 높이 (30px 원의 절반) */
-    left: 50%; /* li의 가운데에서 시작 */
-    width: calc(50% + 7.5px); /* li의 오른쪽 절반 (50%) + gap의 절반 (15px/2 = 7.5px) */
-    /* 이 계산은 선이 다음 스텝의 중앙까지 연결되도록 합니다. */
-    z-index: -1; /* 스텝 번호 뒤로 보내기 */
+    z-index: 0; /* 원형 아이콘 아래에 오도록 */
 }
-/* 마지막 li는 구분선이 없도록 */
-.step-wrap li:last-child::after {
+
+.step-wrap.new-design .step-icon-area::before {
+    left: 0;
+    width: calc(50% - 7.5px); /* 왼쪽 절반 - 원의 반지름 */
+    /* 첫 번째 스텝의 왼쪽 선은 숨김 */
+}
+
+.step-wrap.new-design .step-icon-area::after {
+    right: 0;
+    width: calc(50% - 7.5px); /* 오른쪽 절반 - 원의 반지름 */
+    /* 마지막 스텝의 오른쪽 선은 숨김 */
+}
+
+/* 첫 번째 스텝의 왼쪽 선 숨기기 */
+.step-wrap.new-design li:first-child .step-icon-area::before {
     display: none;
 }
 
-.step-wrap li span {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* 마지막 스텝의 오른쪽 선 숨기기 */
+.step-wrap.new-design li:last-child .step-icon-area::after {
+    display: none;
 }
-
-.step-wrap li .step { /* 스텝 번호 원 스타일 */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #e0e0e0; /* 기본 원 배경색 (아직 오지 않은 단계) */
-    color: #666; /* 기본 번호 색상 (아직 오지 않은 단계) */
-    font-size: 0.8rem;
-    font-style: normal;
-    font-weight: bold;
-    margin-bottom: 5px; /* 원과 텍스트 사이 간격 */
-    border: 1px solid #e0e0e0; /* 기본 원 테두리 */
-    /* 폰트는 이미지처럼 시스템 기본 폰트로 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-.step-wrap li .step-tit { /* 스텝 제목 텍스트 스타일 */
-    font-size: 0.85rem;
-    font-weight: 500;
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-    /* 폰트는 이미지처럼 시스템 기본 폰트로 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-/* 현재 단계 (.active) 스타일 */
-.step-wrap li.active span {
+/* 활성 단계 (.active) 스타일 */
+.step-wrap.new-design li.active .step-label-top,
+.step-wrap.new-design li.active .step-label-bottom {
     color: #007bff; /* 파란색 텍스트 */
 }
 
-.step-wrap li.active .step {
-    background-color: #007bff; /* 파란색 원 */
-    color: #fff; /* 흰색 번호 */
+.step-wrap.new-design li.active .step-circle {
     border-color: #007bff; /* 파란색 테두리 */
+    background-color: #fff; /* 이미지처럼 원형 아이콘은 비어있음 (흰색 배경) */
 }
 
-/* 완료된 단계 (.done) 스타일 - 이미지처럼 파란색으로 변경 */
-.step-wrap li.done span {
+/* 완료 단계 (.done) 스타일 */
+.step-wrap.new-design li.done .step-label-top,
+.step-wrap.new-design li.done .step-label-bottom {
     color: #007bff; /* ✅ 파란색 텍스트 */
 }
 
-.step-wrap li.done .step {
-    background-color: #007bff; /* ✅ 파란색 원 */
-    color: #fff; /* 흰색 번호 */
+.step-wrap.new-design li.done .step-circle {
     border-color: #007bff; /* ✅ 파란색 테두리 */
+    background-color: #fff; /* ✅ 이미지처럼 원형 아이콘은 비어있음 (흰색 배경) */
 }
-
-/* 완료된 단계 (.done) 뒤의 선은 파란색으로 변경 */
-/* 선택자가 li.done:not(:last-child)::after 이므로, 완료된 li 뒤에만 파란색 선이 생깁니다.
-   활성화된 li 뒤의 선은 기본 회색(:after 규칙)을 따릅니다. */
-.step-wrap li.done:not(:last-child)::after {
-    background-color: #007bff; /* ✅ 파란색 선 */
-}
-
 /* sr-only (스크린 리더 전용 텍스트) 스타일 */
 .sr-only {
     position: absolute;
