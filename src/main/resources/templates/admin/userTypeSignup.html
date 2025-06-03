@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/userTypeSignup.css}">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 p-0">
+        <div class="signup-container">
+            <ol class="step-wrap new-design mb-5">
+                <li class="active">
+                    <span class="step-label-top">Step 1</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">가입유형 선택</span>
+                </li>
+                <li>
+                    <span class="step-label-top">Step 2</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">약관동의</span>
+                </li>
+                <li>
+                    <span class="step-label-top">Step 3</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">개인정보 입력</span>
+                </li>
+                <li>
+                    <span class="step-label-top">Step 4</span>
+                    <div class="step-icon-area">
+                        <span class="step-circle"></span>
+                    </div>
+                    <span class="step-label-bottom">가입완료</span>
+                </li>
+            </ol>
+
+            <div class="register-type-selection mb-5">
+                <h3 class="selection-title text-center mb-4" style="font-family: 'Paperlogy', sans-serif">가입 유형을 선택해주세요</h3>
+                <div class="row row-cols-1 row-cols-md-3 g-4 register-type-cards">
+                    <div class="col">
+                        <div class="card h-100 type-card" data-type="supplier">
+                            <div class="card-body text-center">
+                                <img th:src="@{/images/farmer.svg}" alt="공급자" class="type-icon mb-3">
+                                <h5 class="card-title">공급자 회원</h5>
+                                <p class="card-text text-muted">
+                                    <small>상품 생산</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 type-card" data-type="delivery">
+                            <div class="card-body text-center">
+                                <img th:src="@{/images/Delivery.svg}" alt="배송업체" class="type-icon mb-3">
+                                <h5 class="card-title">배송업체 회원</h5>
+                                <p class="card-text text-muted">
+                                    <small>상품 납품 및 배송</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 type-card" data-type="mart">
+                            <div class="card-body text-center">
+                                <img th:src="@{/images/mart.svg}" alt="마트" class="type-icon mb-3">
+                                <h5 class="card-title">마트</h5>
+                                <p class="card-text text-muted">
+                                    <small>마트 발주 및 주문 </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="selectedUserType" name="userType" value="">
+
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="button" id="btnNext" class="btn btn-light me-2" disabled>동의하고 다음으로</button>
+                    <button type="button" class="btn btn-light btn-cancel" onclick="location.href='/'">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/userTypeSignup.js}"></script>
+</th:block>
+</html>

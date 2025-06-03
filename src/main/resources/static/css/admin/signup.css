@@ -5,7 +5,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa !important;
+    background-color: #ffffff !important;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -24,29 +24,160 @@ html, body {
 .signup-container {
     background-color: #ffffff;
     padding: 40px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     border-radius: 16px;
-    width: 100%;
-    max-width: 500px; /* 로그인 컨테이너보다 약간 넓게 설정 가능 */
-    text-align: center;
+    width: 100%; /* 부모 너비를 따르되 */
+    /* HTML에서 제거된 인라인 스타일을 여기에 정의 */
+    max-width: 62.5vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
+/* ★★★ 새로운 스텝 인디케이터 CSS 시작 (이전 스텝 CSS는 삭제 또는 주석 처리) ★★★ */
+
+.step-wrap.new-design { /* 새로운 디자인을 위한 클래스 선택자 */
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 50px auto; /* 중앙 정렬 및 하단 마진 */
+    display: flex;
+    justify-content: center; /* 스텝 항목들 중앙 정렬 */
+    width: 100%;
+    max-width: 800px; /* 전체 스텝 영역의 최대 너비 (필요시 조정) */
+    position: relative; /* 연결선 기준점 */
+}
+
+.step-wrap.new-design li {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가로 중앙 정렬 */
+    text-align: center;
+    position: relative;
+    flex: 1; /* flex-grow, flex-shrink, flex-basis를 1로 설정하여 균등 분배 */
+    padding: 0 10px; /* 각 스텝 항목 내부의 좌우 패딩 */
+}
+
+/* 상단 라벨 (Step 1, Step 2, ...) */
+.step-wrap.new-design .step-label-top {
+    font-size: 0.9rem;
+    color: #888; /* 회색 */
+    margin-bottom: 5px; /* 라벨과 아이콘 사이 간격 */
+    white-space: nowrap;
+}
+
+/* 원형 아이콘 영역 (선과의 정렬을 위해 래퍼 div 사용) */
+.step-wrap.new-design .step-icon-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* 선이 이 영역에서 시작/끝나도록 */
+    margin-bottom: 10px; /* 아이콘 영역과 하단 라벨 사이 간격 */
+}
+
+/* 원형 아이콘 자체 */
+.step-wrap.new-design .step-circle {
+    display: inline-block;
+    width: 40px; /* 원의 크기 */
+    height: 40px; /* 원의 크기 */
+    border: 1px solid #ccc; /* 회색 테두리 */
+    border-radius: 50%;
+    background-color: #fff; /* 흰색 배경 */
+    flex-shrink: 0; /* 공간이 부족해도 줄어들지 않음 */
+    z-index: 1; /* 선 위에 오도록 */
+}
+
+/* 하단 라벨 (1단계 명칭, ...) */
+.step-wrap.new-design .step-label-bottom {
+    font-size: 0.95rem;
+    color: #666; /* 회색 */
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 연결선 스타일 */
+/* 각 li의 step-icon-area의 양쪽에 선을 그려 중앙을 연결 */
+.step-wrap.new-design .step-icon-area::before,
+.step-wrap.new-design .step-icon-area::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1px;
+    background-color: #ccc; /* 기본 회색 선 */
+    z-index: 0; /* 원형 아이콘 아래에 오도록 */
+}
+
+.step-wrap.new-design .step-icon-area::before {
+    left: 0;
+    width: calc(50% - 7.5px); /* 왼쪽 절반 - 원의 반지름 */
+    /* 첫 번째 스텝의 왼쪽 선은 숨김 */
+}
+
+.step-wrap.new-design .step-icon-area::after {
+    right: 0;
+    width: calc(50% - 7.5px); /* 오른쪽 절반 - 원의 반지름 */
+    /* 마지막 스텝의 오른쪽 선은 숨김 */
+}
+
+/* 첫 번째 스텝의 왼쪽 선 숨기기 */
+.step-wrap.new-design li:first-child .step-icon-area::before {
+    display: none;
+}
+
+/* 마지막 스텝의 오른쪽 선 숨기기 */
+.step-wrap.new-design li:last-child .step-icon-area::after {
+    display: none;
+}
+/* 활성 단계 (.active) 스타일 */
+.step-wrap.new-design li.active .step-label-top,
+.step-wrap.new-design li.active .step-label-bottom {
+    color: #007bff; /* 파란색 텍스트 */
+}
+
+.step-wrap.new-design li.active .step-circle {
+    border-color: #007bff; /* 파란색 테두리 */
+    background-color: #fff; /* 이미지처럼 원형 아이콘은 비어있음 (흰색 배경) */
+}
+
+/* 완료 단계 (.done) 스타일 */
+.step-wrap.new-design li.done .step-label-top,
+.step-wrap.new-design li.done .step-label-bottom {
+    color: #007bff; /* ✅ 파란색 텍스트 */
+}
+
+.step-wrap.new-design li.done .step-circle {
+    border-color: #007bff; /* ✅ 파란색 테두리 */
+    background-color: #fff; /* ✅ 이미지처럼 원형 아이콘은 비어있음 (흰색 배경) */
+}
+/* sr-only (스크린 리더 전용 텍스트) 스타일 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+/* ★★★ 스텝 관련 CSS 끝 ★★★ */
+
 
 /* 로고 섹션 */
 .logo-section h1 {
-    font-size: 2.5rem; /* 로그인 페이지보다 약간 작게 */
+    font-size: 2.5rem;
     font-weight: 800;
     color: #222;
     margin-bottom: 8px;
     letter-spacing: -0.5px;
-    font-family: 'Paperlogy', sans-serif;
+    font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
 }
 
 .logo-section p {
     font-size: 1rem;
     color: #666;
     font-weight: 500;
-    font-family: 'Paperlogy', sans-serif;
-    margin: 0 0 6rem 0; /* HTML 인라인 스타일 제거 후 여기에 추가 (6rem) */
+    font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
+    margin: 0 0 6rem 0;
 }
 
 /* 전체 동의 섹션 */
@@ -54,21 +185,30 @@ html, body {
     font-size: 1.1rem;
     font-weight: bold;
     color: #333;
+    font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
+}
+
+/* 체크박스 자체의 테두리 색상 */
+.form-check-input {
+    --bs-border-color: #000000;
 }
 
 /* 개별 약관 아이템 */
 .term-item {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    text-align: left; /* 내부 텍스트 왼쪽 정렬 */
+    text-align: left;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    min-height: 60px;
+    box-sizing: border-box;
 }
 
-.term-item:last-of-type {
-    border-bottom: none; /* 마지막 아이템은 아래 줄 없앰 */
-}
-
-.term-item .d-flex { /* Bootstrap flexbox 클래스 위에 추가 정렬 (필요시) */
-    align-items: center;
+/* 약관 항목 내부의 체크박스 및 버튼 라인 */
+.term-item .d-flex {
+    margin-bottom: 10px;
 }
 
 .term-item .form-check-label {
@@ -76,34 +216,34 @@ html, body {
     color: #444;
     font-weight: 500;
     cursor: pointer;
-}
-
-.term-item .form-check-input {
-    margin-right: 10px; /* 체크박스와 라벨 사이 간격 */
-    width: 1.25em; /* 체크박스 크기 */
-    height: 1.25em;
-    vertical-align: middle; /* 텍스트와 중앙 정렬 */
+    font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
 }
 
 /* 필수/선택 표시 */
 .term-item .required {
-    color: #dc3545; /* 빨간색 */
+    color: red; /* HTML에서 제거된 인라인 스타일 */
     font-size: 0.8rem;
     margin-left: 5px;
+    font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
 }
 
 .term-item .optional {
-    color: #28a745; /* 초록색 */
+    color: #4595f1; /* HTML에서 제거된 인라인 스타일 */
     font-size: 0.8rem;
     margin-left: 5px;
+    font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
 }
 
 /* 내용 보기 버튼 */
 .view-terms-btn {
-    font-size: 0.9rem;
-    color: #6c757d;
+    font-size: 0.9rem; /* HTML에서 제거된 인라인 스타일 */
+    font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
+    color: #007bff;
     text-decoration: none;
     transition: color 0.2s;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .view-terms-btn:hover {
@@ -119,75 +259,124 @@ html, body {
     transform: rotate(180deg);
 }
 
-/* 약관 내용 영역 스타일 (아코디언) */
+/* 약관 내용 영역 스타일 (Bootstrap Collapse와 연동) */
 .terms-content {
-    /* Bootstrap의 .collapse 클래스는 height를 0에서 auto로, 또는 auto에서 0으로
-     * transition을 적용하여 부드럽게 펼쳐지고 접힙니다.
-     * max-height를 직접 덮어쓰면 이 애니메이션이 제대로 작동하지 않을 수 있습니다.
-     * 다만, 내용이 너무 길어서 스크롤이 필요하다면 아래처럼 설정합니다.
-     */
-    max-height: 300px; /* 특정 높이 이상일 때 스크롤이 되도록 */
-    overflow-y: auto;  /* 내용이 max-height를 초과할 때 스크롤바 표시 */
-
-    border: 1px solid #e0e0e0; /* 내용 박스 테두리 */
-    border-radius: 8px; /* 내용 박스 모서리 둥글게 */
-    background-color: #fcfcfc; /* 내용 박스 배경색 */
+    max-height: 300px;
+    overflow: hidden;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    margin-top: 0;
 }
 
 .terms-content .card-body {
-    padding: 15px; /* 내용 안쪽 패딩 */
+    padding: 0;
+}
+
+/* textarea 스타일 */
+.terms-textarea {
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #ffffff;
+    padding: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 0.9rem;
     line-height: 1.6;
-    color: #555;
-    text-align: left; /* 약관 내용 왼쪽 정렬 유지 */
+    color: #000000;
+    box-sizing: border-box;
+    resize: none;
+    outline: none;
+    box-shadow: none;
+    cursor: default;
+    white-space: pre-wrap;
 }
 
-
-/* 동의 및 취소 버튼 */
-.btn-agree {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    background-color: #007bff; /* 기본 부트스트랩 파란색 */
-    border-color: #007bff;
-    border-radius: 8px;
-    transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+/* readonly textarea가 입력 가능한 것처럼 보이지 않게 추가 조정 */
+.terms-textarea:focus {
+    border-color: #e0e0e0;
+    box-shadow: none;
+    background-color: #f8f8f8;
 }
 
-.btn-agree:hover:not(:disabled) {
-    background-color: #0056b3;
-    border-color: #0056b3;
+/* 동의하고 다음으로 & 취소 버튼 컨테이너 */
+/* justify-content-end는 HTML d-flex 클래스에서 처리되므로 여기서는 추가 정렬 필요 없음 */
+
+/* 버튼 공통 스타일 (인라인 스타일에서 가져옴) */
+/* .btn.btn-light 클래스에 대한 스타일 재정의 */
+.btn.btn-light {
+    --bs-btn-padding-x: 0.5rem;
+    --bs-btn-padding-y: 0.5rem;
+    --bs-btn-border-color: #c6c6c6;
+    --bs-btn-border-width: 0.12rem;
+    --bs-btn-font-family: 'Paperlogy', sans-serif; /* HTML에서 제거된 인라인 스타일 */
+    --bs-btn-font-size: 1.2rem;
+    --bs-btn-bg: white;
+    --bs-btn-hover-bg: #d3d3d3;
+    --bs-btn-hover-color: #5f6368;
+    color: #212529; /* 기본 텍스트 색상 */
 }
 
-.btn-agree:disabled {
+/* '동의하고 다음으로' 버튼 비활성화 상태 */
+#btnNext:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    /* 비활성화 시 hover 효과도 제거 */
+    background-color: white !important; /* !important는 최후의 수단, 필요시 제거 */
+    border-color: #c6c6c6 !important; /* !important는 최후의 수단, 필요시 제거 */
+    color: #212529 !important; /* !important는 최후의 수단, 필요시 제거 */
 }
 
-.btn-cancel {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    background-color: #6c757d; /* 부트스트랩 회색 */
-    border-color: #6c757d;
-    color: white;
-    border-radius: 8px;
-    transition: background-color 0.2s, border-color 0.2s;
+/* '동의하고 다음으로' 버튼 활성화 상태의 hover */
+#btnNext:not(:disabled):hover {
+    background-color: var(--bs-btn-hover-bg);
+    color: var(--bs-btn-hover-color);
 }
 
-.btn-cancel:hover {
-    background-color: #5a6268;
-    border-color: #545b62;
+/* 취소 버튼 스타일 (btn-cancel 클래스에 대한 추가/재정의) */
+/* .btn.btn-light.btn-cancel 은 .btn.btn-light 스타일을 상속받으므로,
+   만약 여기에 추가적인 스타일이 필요하다면 정의합니다. */
+/* 현재 인라인 스타일이 .btn.btn-light에 정의되었으므로, 여기에 별도 정의는 불필요할 수 있습니다. */
+/* .btn.btn-light.btn-cancel {
+    // 여기에 btn-cancel에만 적용될 특별한 스타일을 넣습니다.
 }
+*/
+
 
 /* 반응형 디자인 */
+@media (max-width: 768px) {
+    /* 스텝 영역은 화면이 좁아질 때 중앙 정렬을 유지하거나 조정할 수 있습니다. */
+    .step-wrap {
+        gap: 10px; /* 간격 줄임 */
+        font-size: 0.9rem; /* 폰트 크기 줄임 */
+    }
+
+    .step-wrap li .step {
+        width: 25px;
+        height: 25px;
+        font-size: 0.7rem;
+    }
+
+    .step-wrap li .step-tit {
+        font-size: 0.75rem;
+    }
+
+    .step-wrap li:not(:last-child)::after {
+        width: calc(100% + 10px); /* 줄어든 gap에 맞춰 선 길이 조정 */
+        left: calc(50% + 10px); /* 줄어든 gap에 맞춰 선 위치 조정 */
+    }
+}
+
 @media (max-width: 576px) {
     .signup-container {
         padding: 30px 20px;
         border-radius: 12px;
-        max-width: 90%;
+        max-width: 90vw; /* 모바일에서는 뷰포트 너비의 90% 정도를 차지하도록 유지 */
+        max-height: 90vh;
     }
 
     .logo-section h1 {
@@ -198,13 +387,26 @@ html, body {
         font-size: 1rem;
     }
 
+    .term-item {
+        padding: 15px;
+        min-height: 80px;
+    }
+
     .term-item .form-check-label,
     .view-terms-btn {
         font-size: 0.85rem;
     }
 
-    .btn-agree, .btn-cancel {
+    .terms-textarea {
+        min-height: 120px;
+        max-height: 180px;
+        font-size: 0.85rem;
         padding: 10px;
-        font-size: 1rem;
+    }
+
+    .btn.btn-light { /* 버튼 공통 스타일 (모바일에서 패딩 줄임) */
+        --bs-btn-padding-x: 0.4rem;
+        --bs-btn-padding-y: 0.4rem;
+        --bs-btn-font-size: 1.1rem;
     }
 }

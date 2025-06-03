@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chkAll = document.getElementById('chkAll');
     const chkRequired = document.querySelectorAll('.chk-required');
     const chkOptional = document.querySelectorAll('.chk-optional');
-    const btnAgree = document.querySelector('.btn-agree');
+    const btnNext = document.getElementById('btnNext');
 
     // [1] '모두 동의' 체크박스가 변경될 때
     chkAll.addEventListener('change', function() {
@@ -36,9 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkAllRequired() {
         const allRequiredChecked = Array.from(chkRequired).every(checkbox => checkbox.checked);
         if (allRequiredChecked) {
-            btnAgree.removeAttribute('disabled');
+            btnNext.removeAttribute('disabled');
         } else {
-            btnAgree.setAttribute('disabled', 'true');
+            btnNext.setAttribute('disabled', 'true');
         }
     }
 

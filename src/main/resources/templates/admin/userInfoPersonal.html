@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/userInfoPersonal.css}">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 p-0">
+        <div class="signup-container user-info-form"> <ol class="step-wrap new-design mb-5">
+            <li>
+                <span class="step-label-top">Step 1</span>
+                <div class="step-icon-area">
+                    <span class="step-circle"></span>
+                </div>
+                <span class="step-label-bottom">가입유형 선택</span>
+            </li>
+            <li class=""> <span class="step-label-top">Step 2</span>
+                <div class="step-icon-area">
+                    <span class="step-circle"></span>
+                </div>
+                <span class="step-label-bottom">약관동의</span>
+            </li>
+            <li class="active"> <span class="step-label-top">Step 3</span>
+                <div class="step-icon-area">
+                    <span class="step-circle"></span>
+                </div>
+                <span class="step-label-bottom">개인정보 입력</span>
+            </li>
+            <li>
+                <span class="step-label-top">Step 4</span>
+                <div class="step-icon-area">
+                    <span class="step-circle"></span>
+                </div>
+                <span class="step-label-bottom">가입완료</span>
+            </li>
+        </ol>
+
+            <div class="register-form-section">
+                <h3 class="form-title text-center mb-4">가입정보입력</h3>
+                <p class="form-description text-muted mb-4">
+                    <i class="bi bi-info-circle me-2"></i>표는 필수 입력 사항이며, [사업장관리번호 및 [가입여부확인]] 버튼을 반드시 눌러주세요
+                </p>
+
+                <form>
+                    <div class="mb-3 form-group">
+                        <label for="businessId" class="form-label required">사업장관리번호</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="businessId" placeholder="사업장관리번호" aria-label="사업장관리번호">
+                            <button class="btn btn-outline-secondary" type="button" id="btnSearchBusinessId">사업장관리번호 확인</button>
+                            <button class="btn btn-outline-secondary" type="button" id="btnVerifyBusinessId">사업장 관리확인</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="businessName" class="form-label required">사업장명</label>
+                        <input type="text" class="form-control" id="businessName" placeholder="[사업장관리번호 확인] 버튼을 클릭하여 자동으로 입력됩니다." readonly>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="unitBusinessId" class="form-label required">단위사업장번호</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="unitBusinessId" placeholder="단위사업장번호" aria-label="단위사업장번호">
+                            <button class="btn btn-outline-secondary" type="button" id="btnSearchUnitBusinessId">단위사업장검색</button>
+                            <button class="btn btn-outline-secondary" type="button" id="btnCheckSignupStatus">가입여부 확인(설명확인)</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="userId" class="form-label required">아이디</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="userId" placeholder="영문 + 숫자 6~10자 이내" aria-label="아이디">
+                            <button class="btn btn-outline-secondary" type="button" id="btnCheckId">아이디 중복검색</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="password" class="form-label required">비밀번호</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="9~12자 이내의 영문자+숫자+특수문자(!@#$) 조합" aria-label="비밀번호">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
+                                <i class="bi bi-eye-slash"></i> </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="confirmPassword" class="form-label required">비밀번호확인</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 재입력" aria-label="비밀번호확인">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
+                                <i class="bi bi-eye-slash"></i> </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="passwordHintQuestion" class="form-label required">비밀번호 분실 시 확인 질문</label>
+                        <select class="form-select" id="passwordHintQuestion" aria-label="비밀번호 분실 시 확인 질문">
+                            <option selected>질문을 선택하세요.</option>
+                            <option value="1">가장 좋아하는 음식은?</option>
+                            <option value="2">어머니 성함은?</option>
+                            <option value="3">태어난 곳은?</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="passwordHintAnswer" class="form-label required">비밀번호 분실 시 확인 답변</label>
+                        <input type="text" class="form-control" id="passwordHintAnswer" placeholder="띄어쓰기 포함 10자 이내" aria-label="비밀번호 분실 시 확인 답변">
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="phone" class="form-label required">전화번호</label>
+                        <input type="text" class="form-control" id="phone" placeholder="숫자만 입력 (예: 01012345678)" aria-label="전화번호">
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="contactPerson" class="form-label required">업무담당자명</label>
+                        <input type="text" class="form-control" id="contactPerson" placeholder="직원 또는 대표자명 입력" aria-label="업무담당자명">
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label for="email" class="form-label required">이메일</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="email" aria-label="이메일">
+                            <select class="form-select" aria-label="이메일 도메인">
+                                <option selected>직접입력</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="daum.net">daum.net</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 form-group">
+                        <label class="form-label required">소식지 수신여부</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="newsletter" id="newsletterNo" value="N" checked>
+                                <label class="form-check-label" for="newsletterNo">받지 않음</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="newsletter" id="newsletterYes" value="Y">
+                                <label class="form-check-label" for="newsletterYes">받음 <small>(공단의 다양한 소식을 무료로 만나보세요)</small></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <button type="submit" class="btn btn-primary me-2">가입하기</button>
+                        <button type="button" class="btn btn-light btn-cancel" onclick="location.href='/'">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/userInfoPersonal.js}"></script>
+</th:block>
