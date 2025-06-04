@@ -3,17 +3,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layouts/layout}">
-<head>
-    <title>모두의 마트</title>
 
-    <th:block layout:fragment="css">
-        <!-- 추가 css 필요 시 여기에 -->
-    </th:block>
-</head>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+</th:block>
 
-<body>
-<!-- ✅ 본문 콘텐츠 영역만 fragment 지정 -->
-<div layout:fragment="content">
+<th:block layout:fragment="content">
     <div class="carouselContainer">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <!-- 인디케이터 -->
@@ -52,9 +47,9 @@
             </button>
         </div>
     </div>
-</div>
+</th:block>
 
 <!-- JS 삽입 지점 -->
-<th:block layout:fragment="script"></th:block>
-</body>
-</html>
+<th:block layout:fragment="script">
+
+</th:block>

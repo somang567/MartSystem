@@ -1,28 +1,11 @@
 package com.martsystem.controller;
 
+import com.martsystem.constant.UserRole;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminContorller {
-	@GetMapping("/login")
-	public String Login(){
-		return "admin/login";
-	}
 
-
-	@GetMapping("/register")
-	public String register(){
-		return "admin/userTypeSignup";
-	}
-
-	@GetMapping("/register/signupAgree")
-	public String signUpAgree(){
-		return "admin/signup";
-	}
-
-	@GetMapping("/register/userInfoPersonal")
-	public String userInfoPersonal(){
-		return "admin/userInfoPersonal";
-	}
 }
