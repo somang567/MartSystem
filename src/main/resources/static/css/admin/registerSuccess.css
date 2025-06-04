@@ -1,0 +1,164 @@
+.complete-container {
+    width: 100%;
+    max-width:  650px; /* 적절한 너비 설정 */
+
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    text-align: center; /* 내부 텍스트 및 요소 가운데 정렬 */
+}
+
+.complete-icon {
+    font-size: 80px; /* 체크 아이콘 크기 */
+    color: #ffe13c; /* 초록색 체크 */
+    margin-bottom: 20px;
+    display: inline-block; /* svg나 아이콘 폰트 사용 시 정렬 위함 */
+    border: 3px solid #ffe13c; /* 테두리 추가 */
+    border-radius: 50%; /* 원형 테두리 */
+    padding: 10px; /* 아이콘과 테두리 사이 간격 */
+    line-height: 1; /* 아이콘 수직 정렬 */
+}
+
+.complete-icon svg {
+    width: 80px; /* SVG 이미지 크기 조절 */
+    height: 80px;
+    vertical-align: middle; /* 수직 가운데 정렬 */
+}
+
+
+.complete-message{
+    font-family: 'Paperlogy' , sans-serif;
+}
+.complete-message h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.complete-message p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+.step-wrap.new-design {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 50px auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+}
+
+.step-wrap.new-design li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    flex: 1;
+    padding: 0 5px; /* 스텝 간격 조정 */
+}
+
+.step-wrap.new-design .step-label-top {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 5px;
+    white-space: nowrap;
+}
+
+.step-wrap.new-design .step-icon-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.step-wrap.new-design .step-circle {
+    display: inline-block;
+    width: 38px; /* 크기 약간 줄임 */
+    height: 38px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    background-color: #fff;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.step-wrap.new-design .step-label-bottom {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.step-wrap.new-design .step-icon-area::before,
+.step-wrap.new-design .step-icon-area::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1px;
+    background-color: #e0e0e0; /* 연한 회색 선 */
+    z-index: 0;
+}
+
+.step-wrap.new-design .step-icon-area::before {
+    left: 0;
+    width: calc(50% - 19px); /* 원 반지름 (38px/2 = 19px)만큼 빼기 */
+}
+
+.step-wrap.new-design .step-icon-area::after {
+    right: 0;
+    width: calc(50% - 19px);
+}
+
+.step-wrap.new-design li:first-child .step-icon-area::before { display: none; }
+.step-wrap.new-design li:last-child .step-icon-area::after { display: none; }
+
+/* 활성 단계 (.active) 스타일 */
+.step-wrap.new-design li.active .step-label-top,
+.step-wrap.new-design li.active .step-label-bottom {
+    color: #007bff; /* 파란색 */
+}
+
+.step-wrap.new-design li.active .step-circle {
+    border-color: #007bff; /* 파란색 테두리 */
+    background-color: #fff;
+}
+/* ★★★ 스텝 인디케이터 CSS 끝 ★★★ */
+
+
+.btn-main.btn-light { /* .btn-main과 .btn-light 클래스를 동시에 가진 요소 */
+    width: 100%; /* 너비는 그대로 유지 */
+    padding: 15px 0; /* 패딩도 그대로 유지 */
+    padding: 15px 0; /* 위에서 이미 지정했으므로 중복 제거 가능 */
+    border: 0.12rem solid #c6c6c6; /* border 속성으로 직접 지정 */
+    font-family: 'Paperlogy', sans-serif; /* font-family 속성으로 직접 지정 */
+    font-size: 1.2rem; /* font-size 속성으로 직접 지정 */
+    background-color: white;
+    color: #212529; /* 기본 텍스트 색상 */
+    border-radius: 5px; /* HTML 이미지 참고, 추가 */
+    cursor: pointer; /* 커서 포인터, 추가 */
+    transition: background-color 0.3s ease; /* 호버 트랜지션, 추가 */
+}
+
+/* 호버 스타일 */
+.btn-main.btn-light:hover {
+    background-color: #d3d3d3;
+    color: #5f6368;
+}
+
+
+/* 호버 스타일 */
+.btn-main.btn-light:hover {
+    background-color: #d3d3d3;
+    color: #5f6368;
+}
+
