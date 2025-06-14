@@ -45,7 +45,9 @@
                 <p style="font-family: 'Paperlogy', sans-serif; margin-bottom: 6rem">회원가입 약관동의</p>
             </div>
 
-            <form id="termsForm" th:action="@{/join/terms}" method="post">
+            <form id="termsForm" th:action="@{/register/signupAgree}" method="post">
+                <input type="hidden" name="userRoleType" th:value="${userRoleType}">
+
                 <div class="form-check mb-4 all-agree-section" >
                     <input class="form-check-input" type="checkbox" id="chkAll" name="chkAll">
                     <label class="form-check-label" for="chkAll">
