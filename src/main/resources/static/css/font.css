@@ -11,7 +11,7 @@
 
 @font-face {
     font-family: 'PartialSansKR';
-    src: url("/fonts/PartialSansKR-Regular.otf") format('truetype');
+    src: url("/fonts/PartialSansKR-Regular.otf") format('opentype'); /* format 수정 */
     font-weight: normal;
     font-style: normal;
 }
@@ -21,11 +21,11 @@
 }
 
 @font-face {
-    font-family: 'PyeongChangPeace';
-    src: url("/fonts/PyeongChangPeace-Bold.otf") format('truetype');
+    font-family: 'PyeongChangPeace'; /* <<-- font-family 이름 수정 */
+    src: url("/fonts/PyeongChangPeace-Bold.otf") format('opentype'); /* format 수정 */
     font-weight: normal;
     font-style: normal;
 }
-.font-PyeougChang {
-    font-family: 'PeyongChangPeace', sans-serif;
+.font-pyeongchang { /* <<-- 클래스 이름 수정 (오타 수정 및 소문자 권장) */
+    font-family: 'PyeongChangPeace', sans-serif; /* <<-- font-family 이름 수정 */
 }
