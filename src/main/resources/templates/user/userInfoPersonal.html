@@ -69,6 +69,7 @@
                                 <button class="btn btn-outline-secondary3" type="button" id="btnVerifyBusinessId">사업장 관리확인</button>
                             </div>
                             <div class="text-danger" th:if="${#fields.hasErrors('businessRegistrationNumber')}" th:errors="*{businessRegistrationNumber}"></div>
+                            <div id="businessVerificationResult" class="form-text mt-2"></div>
                         </div>
 
                         <div class="mb-3 form-group">
@@ -94,12 +95,6 @@
                             <label for="ceoName" class="form-label required">대표자명</label>
                             <input type="text" class="form-control" id="ceoName" th:field="*{ceoName}" placeholder="대표자명 입력">
                             <div class="text-danger" th:if="${#fields.hasErrors('ceoName')}" th:errors="*{ceoName}"></div>
-                        </div>
-
-                        <div class="mb-3 form-group">
-                            <label for="businessCategory" class="form-label required">업종</label>
-                            <input type="text" class="form-control" id="businessCategory" th:field="*{businessCategory}" placeholder="업종 분류">
-                            <div class="text-danger" th:if="${#fields.hasErrors('businessCategory')}" th:errors="*{businessCategory}"></div>
                         </div>
                     </div>
 
@@ -136,7 +131,7 @@
                     <div class="mb-3 form-group">
                         <label for="passwordConfirm" class="form-label required">비밀번호확인</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}" placeholder="비밀번호 재입력" aria-label="비밀번호확인">
+                            <input type="password" class="form-control" id="confirmPassword" th:field="*{passwordConfirm}" placeholder="비밀번호 재입력" aria-label="비밀번호확인">
                             <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
                                 <i class="bi bi-eye-slash"><img src="/images/passwordEyes.svg" alt="" class="passwordEyesIcon"></i></button>
                         </div>
@@ -200,38 +195,16 @@
             </div>
         </div>
     </div>
+
+    <div id="addressSearchModal" class="address-search-modal-overlay">
+        <div class="address-search-modal-content">
+            <div id="addressSearchContainer" style="width:100%; height:100%;"></div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="script">
     <script th:src="@{/js/userInfoPersonal.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-        document.getElementById('btnSearchBusinessAddress').addEventListener('click', function() {
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    // 도로명 주소
-                    document.getElementById('businessRoadAddress').value = data.roadAddress;
-                    // 우편번호
-                    document.getElementById('businessZipCode').value = data.zonecode;
-                    // 상세 주소 필드에 포커스 (사용자가 직접 입력하도록)
-                    document.getElementById('businessDetailAddress').focus();
-                }
-            }).open();
-        });
-
-        // 비밀번호 보이기/숨기기 토글 (JS 코드에 따라 구현 필요)
-        document.getElementById('togglePassword1').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            // 아이콘 변경 로직 추가 (예: classList.toggle('bi-eye-slash') / 'bi-eye')
-        });
-        document.getElementById('togglePassword2').addEventListener('click', function() {
-            const confirmPasswordInput = document.getElementById('confirmPassword');
-            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            confirmPasswordInput.setAttribute('type', type);
-            // 아이콘 변경 로직 추가
-        });
-    </script>
 </th:block>
 </html>
