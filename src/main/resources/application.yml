@@ -35,3 +35,13 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+nts:
+  api:
+    service-key: rUCauHpr6t0fHhTOe6d1nFjXe3PHwMXJ5QgLCTdn3wNPIMepsQfeF5YgUGElydbxW6Cxzo2G8WDYaSmHErsiwg==
+    status-url: https://api.odcloud.kr/api/nts-businessman/v1/status
+
+nps:
+  api:
+    service-key: rUCauHpr6t0fHhTOe6d1nFjXe3PHwMXJ5QgLCTdn3wNPIMepsQfeF5YgUGElydbxW6Cxzo2G8WDYaSmHErsiwg==
+    status-url: https://apis.data.go.kr/B552015/NpsBplcInfoInqireServiceV2

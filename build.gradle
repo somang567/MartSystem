@@ -36,7 +36,9 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 
+
     implementation 'org.modelmapper:modelmapper:2.4.2'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     compileOnly 'org.projectlombok:lombok'
 

@@ -33,6 +33,7 @@ public class SecurityConfig {
 								new AntPathRequestMatcher("/fonts/**"),   // **이 줄을 추가해야 합니다!**
 								new AntPathRequestMatcher("/")
 						).permitAll()
+						.requestMatchers("api/**").permitAll()
 						// 나머지 모든 요청은 인증 필요
 						.anyRequest().authenticated()
 				)
