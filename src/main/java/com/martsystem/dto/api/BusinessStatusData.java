@@ -1,6 +1,6 @@
 // src/main/java/com/yourcompany/yourapp/dto/BusinessStatusData.java
 // ⭐ 새로 생성하는 파일입니다 ⭐
-package com.martsystem.dto; // ⭐ 실제 패키지 경로로 변경하세요 ⭐
+package com.martsystem.dto.api; // ⭐ 실제 패키지 경로로 변경하세요 ⭐
 
 import lombok.Data; // ⭐ Lombok 임포트 ⭐
 
