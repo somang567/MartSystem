@@ -213,6 +213,43 @@ html, body {
     border-color: #bbbbbb;
 }
 
+
+/* 주소 검색 모달 오버레이 */
+.address-search-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 다른 요소 위에 표시 */
+    visibility: hidden; /* 기본적으로 숨김 */
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+
+.address-search-modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 주소 검색 모달 콘텐츠 (팝업 창 자체) */
+.address-search-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative; /* 닫기 버튼 위치 조정을 위함 */
+    width: 500px; /* **원하는 팝업 너비** */
+    height: 490px; /* **원하는 팝업 높이** */
+    display: flex; /* 내부 컨테이너와 버튼 배치를 위함 */
+    flex-direction: column;
+}
+
+
 /* 이메일 select 박스 테두리 */
 .input-group .form-select {
     border-top-left-radius: 0;
@@ -223,6 +260,30 @@ html, body {
 .input-group input[type="email"] + .form-select {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+/* ✅ 이메일 직접입력 필드 스타일 */
+#emailDomainInput {
+    display: inline-block;
+    width: auto;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    height: 38px;
+    box-sizing: border-box;
+}
+
+/* ✅ readonly 상태일 때 회색 배경 및 커서 제한 */
+input[readonly], select[disabled] {
+    background-color: #e9ecef !important;
+    cursor: not-allowed;
+}
+
+/* ✅ 이메일 아이디 & 도메인 필드 readonly 시 valid 스타일 */
+input.is-valid, select.is-valid {
+    border-color: #28a745 !important; /* Bootstrap green */
+    background-image: none;
 }
 
 
@@ -312,67 +373,32 @@ html, body {
 
 @media (max-width: 576px) {
     .signup-container.user-info-form {
-        padding: 25px 20px;
     }
     .register-form-section .form-title {
-        font-size: 1.4rem;
+        padding: 25px 20px;
     }
     .form-group {
-        margin-bottom: 20px;
+        font-size: 1.4rem;
     }
     .input-group {
+        margin-bottom: 20px;
         flex-direction: column; /* 작은 화면에서 버튼이 아래로 */
-        align-items: stretch;
     }
     .input-group .form-control, .input-group .form-select {
-        margin-bottom: 10px; /* 버튼과의 간격 */
+        align-items: stretch;
     }
     .input-group .btn {
+        margin-bottom: 10px; /* 버튼과의 간격 */
         width: 100%; /* 버튼 전체 너비 */
         margin-left: 0;
-        margin-top: 5px;
     }
     .input-group .form-select {
+        margin-top: 5px;
         border-radius: 8px !important; /* 다시 둥글게 */
         border-left: 1px solid #e0e0e0; /* 테두리 다시 보이기 */
-        max-width: 100%;
     }
     .input-group input[type="email"] + .form-select {
+        max-width: 100%;
         margin-top: 0; /* 이메일 select 박스 상단 여백 제거 */
     }
-}
-
-/* 주소 검색 모달 오버레이 */
-.address-search-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정 배경 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* 다른 요소 위에 표시 */
-    visibility: hidden; /* 기본적으로 숨김 */
-    opacity: 0;
-    transition: visibility 0s, opacity 0.3s ease-in-out;
-}
-
-.address-search-modal-overlay.active {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* 주소 검색 모달 콘텐츠 (팝업 창 자체) */
-.address-search-modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative; /* 닫기 버튼 위치 조정을 위함 */
-    width: 500px; /* **원하는 팝업 너비** */
-    height: 490px; /* **원하는 팝업 높이** */
-    display: flex; /* 내부 컨테이너와 버튼 배치를 위함 */
-    flex-direction: column;
 }

@@ -1,4 +1,4 @@
-package com.martsystem.dto;
+package com.martsystem.dto.api;
 
 import lombok.Data;
 
