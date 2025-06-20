@@ -1,14 +1,12 @@
-package com.martsystem.service;
+package com.martsystem.service.api;
 
-import com.martsystem.dto.NpsApiResponse;
+import com.martsystem.dto.api.NpsApiResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 @Service
 public class NpsApiService {

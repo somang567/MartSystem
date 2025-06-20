@@ -21,16 +21,13 @@ spring:
     console:
       enabled: true
       path: /h2-console
-  security:
-    user:
-      name: admin
-      password: admin
   logging:
     level:
       root: INFO
       com.martsystem: DEBUG
       org.springframework.web: INFO
       org.hibernate: INFO
+      org.springframework.security: DEBUG
   servlet:
     multipart:
       max-file-size: 10MB
