@@ -1,24 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. 카카오 주소 검색 API 연동 (embed 방식)
+    /** -------------------- 1. 카카오 주소 검색 API 연동 -------------------- **/
     const btnSearchBusinessAddress = document.getElementById('btnSearchBusinessAddress');
-    const addressSearchModal = document.getElementById('addressSearchModal'); // <div id="addressSearchModal"> (모달 오버레이)
-    const addressSearchContainer = document.getElementById('addressSearchContainer'); // <div id="addressSearchContainer"> (주소 검색 API가 삽입될 곳)
+    const addressSearchModal = document.getElementById('addressSearchModal');
+    const addressSearchContainer = document.getElementById('addressSearchContainer');
 
-    if (btnSearchBusinessAddress && addressSearchModal && addressSearchContainer) { // closeAddressSearchModal은 이제 필요 없으므로 제거
-        btnSearchBusinessAddress.addEventListener('click', function() {
-            addressSearchModal.classList.add('active'); // 모달 오버레이 활성화
-
+    if (btnSearchBusinessAddress && addressSearchModal && addressSearchContainer) {
+        btnSearchBusinessAddress.addEventListener('click', function () {
+            addressSearchModal.classList.add('active');
             new daum.Postcode({
-                oncomplete: function(data) {
-                    // 검색된 도로명 주소와 우편번호를 해당 입력 필드에 채워 넣습니다.
+                oncomplete: function (data) {
                     document.getElementById('businessRoadAddress').value = data.roadAddress;
                     document.getElementById('businessZipCode').value = data.zonecode;
-                    // 상세 주소 필드에 포커스를 주어 사용자가 직접 나머지 주소를 입력하도록 유도합니다.
                     document.getElementById('businessDetailAddress').focus();
-
-                    addressSearchModal.classList.remove('active'); // 주소 검색 완료 시 모달 비활성화
-                    addressSearchContainer.innerHTML = ''; // embed된 주소 검색 UI 비우기
+                    addressSearchModal.classList.remove('active');
+                    addressSearchContainer.innerHTML = '';
                 },
                 width: '100%',
                 height: '100%',
@@ -32,17 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }).embed(addressSearchContainer);
         });
 
-        // ⭐ 모달 외부 클릭 시 닫기 기능 추가 (기존 코드) ⭐
-        addressSearchModal.addEventListener('click', function(event) {
-            // 클릭된 요소가 모달 오버레이 자체이고, 모달 콘텐츠 영역이 아닌 경우
+        addressSearchModal.addEventListener('click', function (event) {
             if (event.target === addressSearchModal) {
                 addressSearchModal.classList.remove('active');
                 addressSearchContainer.innerHTML = '';
             }
         });
 
-        // ⭐ ESC 키를 눌렀을 때 모달 닫기 (기존 코드) ⭐
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape' && addressSearchModal.classList.contains('active')) {
                 addressSearchModal.classList.remove('active');
                 addressSearchContainer.innerHTML = '';
@@ -50,132 +42,260 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ⭐⭐⭐ 2. 사업자 등록번호 확인 기능 (Ajax로 구현) 시작 ⭐⭐⭐
-    // ⭐ 새로 추가된 변수 선언: 사업장 관리확인 버튼 ⭐
+    /** -------------------- 2. 사업자 등록번호 확인 -------------------- **/
     const btnVerifyBusinessId = document.getElementById('btnVerifyBusinessId');
-    // ⭐ 새로 추가된 변수 선언: HTML에 추가된 결과를 표시할 div 요소 ⭐
     const businessVerificationResultDiv = document.getElementById('businessVerificationResult');
 
-    // ⭐ 사업장 관리확인 버튼과 결과 표시 div가 모두 존재하는지 확인 ⭐
     if (btnVerifyBusinessId && businessVerificationResultDiv) {
-        // ⭐ 사업장 관리확인 버튼에 클릭 이벤트 리스너 추가 ⭐
         btnVerifyBusinessId.addEventListener('click', async () => {
-            // ⭐ 입력된 사업자등록번호 가져오기 ⭐
             const businessRegistrationNumber = document.getElementById('businessRegistrationNumber').value;
-            // ⭐ 하이픈 제거 (국세청 API는 숫자만 받음) ⭐
             const cleanBusinessNumber = businessRegistrationNumber.replace(/-/g, '');
 
-            // ⭐ 입력값 유효성 검사 ⭐
-            if (!cleanBusinessNumber) {
+            if (!cleanBusinessNumber || cleanBusinessNumber.length !== 10 || isNaN(cleanBusinessNumber)) {
                 businessVerificationResultDiv.style.color = 'red';
-                businessVerificationResultDiv.textContent = '사업자등록번호를 입력해주세요.';
-                return;
-            }
-            if (cleanBusinessNumber.length !== 10 || isNaN(cleanBusinessNumber)) { // 10자리 숫자인지 확인
-                businessVerificationResultDiv.style.color = 'red';
-                businessVerificationResultDiv.textContent = '유효한 10자리 숫자로 된 사업자등록번호를 입력해주세요.';
+                businessVerificationResultDiv.textContent = '유효한 사업자등록번호를 입력해주세요.';
                 return;
             }
 
-            // ⭐ 상태 메시지 초기화 및 로딩 표시 ⭐
             businessVerificationResultDiv.style.color = 'gray';
-            businessVerificationResultDiv.textContent = '사업자 등록 상태 확인 중...';
+            businessVerificationResultDiv.textContent = '조회 중...';
 
             try {
-                // ⭐ 여러분의 백엔드 API 엔드포인트로 Ajax (fetch API) 요청 ⭐
                 const response = await fetch('/api/checkBusinessStatus', {
-                    method: 'POST', // ⭐ POST 메소드 사용 ⭐
-                    headers: {
-                        'Content-Type': 'application/json' // ⭐ JSON 형식으로 요청 본문 전송 명시 ⭐
-                    },
-                    // ⭐ 요청 본문에 사업자번호 배열을 JSON 문자열로 변환하여 포함 ⭐
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ businessNumbers: [cleanBusinessNumber] })
                 });
 
-                // ⭐ HTTP 응답이 성공(2xx)이 아니면 오류 발생 ⭐
-                if (!response.ok) {
-                    const errorText = await response.text(); // 서버에서 보낸 오류 메시지 텍스트 가져오기
-                    throw new Error(errorText || '백엔드 API 호출 실패');
-                }
-
-                // ⭐ 서버 응답을 JSON 객체로 파싱 ⭐
                 const data = await response.json();
 
-                // ⭐ 응답 데이터 확인 및 UI 업데이트 ⭐
-                if (data && data.data && data.data.length > 0) {
-                    const statusInfo = data.data[0]; // 첫 번째 사업자 정보 가져옴
-                    let statusMessage = '';
-                    let statusColor = '';
+                if (response.ok && data.data?.length > 0) {
+                    const status = data.data[0].b_stt_cd;
+                    const message = {
+                        '01': [`정상 사업자 (${data.data[0].tax_type || ''})`, 'green'],
+                        '02': [`폐업 사업자 (폐업일: ${data.data[0].close_dt ? `${data.data[0].close_dt.substring(0, 4)}년 ${data.data[0].close_dt.substring(4, 6)}월 ${data.data[0].close_dt.substring(6, 8)}일` : '정보 없음'})`, 'red'],
+                        '04': ['휴업 사업자', 'orange']
+                    }[status] || ['확인된 상태 없음', 'gray'];
 
-                    // ⭐ 사업자 상태 코드에 따라 메시지와 색상 설정 ⭐
-                    switch (statusInfo.b_stt_cd) {
-                        case '01': // 계속사업자
-                            statusMessage = `정상 사업자 (${statusInfo.tax_type})`;
-                            statusColor = 'green';
-                            break;
-                        case '02': // 폐업자
-                            const closeDt = statusInfo.close_dt;
-                            const formattedCloseDt = closeDt ?
-                                `${closeDt.substring(0, 4)}년 ${closeDt.substring(4, 6)}월 ${closeDt.substring(6, 8)}일` :
-                                '정보 없음';
-                            statusMessage = `폐업 사업자 (폐업일: ${formattedCloseDt})`;
-                            statusColor = 'red';
-                            break;
-                        case '04': // 휴업자
-                            statusMessage = `휴업 사업자`;
-                            statusColor = 'orange';
-                            break;
-                        default: // 그 외 알 수 없는 상태
-                            statusMessage = `확인된 상태: ${statusInfo.b_stt || '정보 없음'}`;
-                            statusColor = 'gray';
-                            break;
-                    }
-                    businessVerificationResultDiv.style.color = statusColor;
-                    businessVerificationResultDiv.textContent = statusMessage;
-
+                    businessVerificationResultDiv.style.color = message[1];
+                    businessVerificationResultDiv.textContent = message[0];
                 } else {
-                    // ⭐ 조회된 사업자 정보가 없는 경우 ⭐
                     businessVerificationResultDiv.style.color = 'red';
-                    businessVerificationResultDiv.textContent = '조회된 사업자 정보가 없거나 유효하지 않습니다.';
+                    businessVerificationResultDiv.textContent = '조회된 사업자 정보가 없습니다.';
                 }
 
-            } catch (error) {
-                // ⭐ API 호출 또는 처리 중 발생한 오류 처리 ⭐
-                console.error('사업자등록상태 확인 중 오류 발생:', error);
+            } catch (err) {
                 businessVerificationResultDiv.style.color = 'red';
-                businessVerificationResultDiv.textContent = `오류 발생: ${error.message}`;
+                businessVerificationResultDiv.textContent = '오류 발생: ' + err.message;
             }
         });
     }
-    // ⭐⭐⭐ 2. 사업자 등록번호 확인 기능 (Ajax로 구현) 끝 ⭐⭐⭐
 
+    /** -------------------- 3. 이메일 입력 및 중복 검사 -------------------- **/
+    const emailIdInput = document.getElementById('emailId');
+    const emailDomainInput = document.getElementById('emailDomainInput');
+    const emailDomainSelect = document.getElementById('emailDomainSelect');
+    const hiddenEmailInput = document.getElementById('email');
+    const btnCheckId = document.getElementById('btnCheckId');
+    const emailDuplicationMessageDiv = document.getElementById('emailDuplicationMessage');
+    const emailCheckStatusInput = document.getElementById('emailCheckStatus');
+    const registrationForm = document.getElementById('registrationForm');
 
-    // 3. 비밀번호 보이기/숨기기 토글 기능 (변동 없음, 기존 코드)
-    const togglePassword1 = document.getElementById('togglePassword1');
-    const passwordField = document.getElementById('password');
-    const togglePassword2 = document.getElementById('togglePassword2');
-    const confirmPasswordField = document.getElementById('PasswordConfirm');
+    function toggleCustomEmailInput(show) {
+        emailDomainInput.style.display = show ? 'inline-block' : 'none';
+        if (!show) emailDomainInput.value = '';
+    }
 
-    function setupPasswordToggle(toggleButton, passwordInput) {
-        if (toggleButton && passwordInput) {
-            toggleButton.addEventListener('click', () => {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
+    function setEmailFieldsReadonly(isReadonly) {
+        emailIdInput.readOnly = isReadonly;
+        emailDomainInput.readOnly = isReadonly;
+        emailDomainSelect.disabled = isReadonly;
+        btnCheckId.disabled = isReadonly;
 
-                const iconElement = toggleButton.querySelector('i');
-                if (iconElement) {
-                    iconElement.classList.toggle('bi-eye');
-                    iconElement.classList.toggle('bi-eye-slash');
+        const bgColor = isReadonly ? '#e9ecef' : '';
+        emailIdInput.style.backgroundColor = bgColor;
+        emailDomainInput.style.backgroundColor = bgColor;
+        emailDomainSelect.style.backgroundColor = bgColor;
+
+        emailIdInput.classList.toggle('is-valid', isReadonly);
+        emailDomainInput.classList.toggle('is-valid', isReadonly && emailDomainInput.style.display !== 'none');
+        emailDomainSelect.classList.toggle('is-valid', isReadonly);
+    }
+
+    function updateHiddenEmailField() {
+        const id = emailIdInput.value.trim();
+        const domain = emailDomainSelect.value === 'custom' ? emailDomainInput.value.trim() : emailDomainSelect.value;
+        hiddenEmailInput.value = id && domain ? `${id}@${domain}` : '';
+        emailCheckStatusInput.value = 'unchecked';
+        emailDuplicationMessageDiv.textContent = '';
+        setEmailFieldsReadonly(false);
+    }
+
+    function onEmailDomainSelectChange() {
+        toggleCustomEmailInput(emailDomainSelect.value === 'custom');
+        updateHiddenEmailField();
+    }
+
+    function initializeEmailDomain() {
+        const initialEmail = hiddenEmailInput.value;
+        let initialDomain = '';
+        if (initialEmail && initialEmail.includes('@')) {
+            initialDomain = initialEmail.split('@')[1];
+        }
+
+        let found = false;
+        for (let option of emailDomainSelect.options) {
+            if (option.value === initialDomain) {
+                emailDomainSelect.value = initialDomain;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found || !initialDomain) {
+            emailDomainSelect.value = 'custom';
+            toggleCustomEmailInput(true);
+            emailDomainInput.value = initialDomain || '';
+        } else {
+            toggleCustomEmailInput(false);
+        }
+
+        updateHiddenEmailField();
+
+        if (initialEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(initialEmail)) {
+            setEmailFieldsReadonly(true);
+            emailDuplicationMessageDiv.textContent = '이메일 정보가 이미 입력되어 있습니다.';
+            emailDuplicationMessageDiv.style.color = 'gray';
+            emailCheckStatusInput.value = 'available';
+        }
+    }
+
+    if (emailIdInput && emailDomainInput && emailDomainSelect && hiddenEmailInput) {
+        emailIdInput.addEventListener('input', updateHiddenEmailField);
+        emailDomainInput.addEventListener('input', updateHiddenEmailField);
+        emailDomainSelect.addEventListener('change', onEmailDomainSelectChange);
+        initializeEmailDomain();
+    }
+
+    if (btnCheckId) {
+        btnCheckId.addEventListener('click', async () => {
+            updateHiddenEmailField();
+            const email = hiddenEmailInput.value;
+
+            if (!email) {
+                emailDuplicationMessageDiv.textContent = '이메일 주소를 입력해주세요.';
+                emailDuplicationMessageDiv.style.color = 'red';
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                emailDuplicationMessageDiv.textContent = '유효한 이메일 형식이 아닙니다.';
+                emailDuplicationMessageDiv.style.color = 'red';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/checkEmailDuplication', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (res.ok && data.duplicated) {
+                    emailDuplicationMessageDiv.textContent = '이미 사용 중인 이메일입니다.';
+                    emailDuplicationMessageDiv.style.color = 'red';
+                    setEmailFieldsReadonly(false);
+                    emailCheckStatusInput.value = 'duplicated';
+                } else {
+                    emailDuplicationMessageDiv.textContent = '사용 가능한 이메일입니다.';
+                    emailDuplicationMessageDiv.style.color = 'green';
+                    setEmailFieldsReadonly(true);
+                    emailCheckStatusInput.value = 'available';
                 }
-                const imgElement = toggleButton.querySelector('img.passwordEyesIcon');
-                if (imgElement) {
-                    // 실제 아이콘 이미지 파일이 두 종류(눈을 뜬/감은)라면 src를 변경
-                    // 예시: imgElement.src = (type === 'text') ? '/images/eye-open.svg' : '/images/eye-closed.svg';
-                    // 현재 HTML에서 동일한 이미지를 사용하므로, 이 부분의 src 변경 로직은 생략되어 있습니다.
+            } catch (err) {
+                emailDuplicationMessageDiv.textContent = '중복 확인 중 오류가 발생했습니다.';
+                emailDuplicationMessageDiv.style.color = 'red';
+            }
+        });
+    }
+
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', (event) => {
+            if (emailCheckStatusInput.value !== 'available') {
+                event.preventDefault();
+                emailDuplicationMessageDiv.textContent = '이메일 중복 확인을 완료해주세요.';
+                emailDuplicationMessageDiv.style.color = 'red';
+                alert('이메일 중복 확인을 완료해주세요.');
+            }
+        });
+    }
+
+    /** -------------------- 4. 비밀번호 입력 및 확인 -------------------- **/
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('passwordConfirm');
+    const passwordMatchFeedbackDiv = document.getElementById('passwordMatchFeedback');
+    const lengthFeedback = document.getElementById('lengthFeedback');
+    const uppercaseFeedback = document.getElementById('uppercaseFeedback');
+    const lowercaseFeedback = document.getElementById('lowercaseFeedback');
+    const numberFeedback = document.getElementById('numberFeedback');
+    const specialCharFeedback = document.getElementById('specialCharFeedback');
+
+    function updateFeedback(el, valid) {
+        if (!el) return;
+        const icon = el.querySelector('i');
+        el.style.setProperty('color', valid ? 'green' : 'red', 'important');
+        if (icon) {
+            icon.classList.toggle('bi-check-circle-fill', valid);
+            icon.classList.toggle('bi-x-circle-fill', !valid);
+            icon.style.setProperty('color', valid ? 'green' : 'red', 'important');
+        }
+    }
+
+    function checkPasswordMatch() {
+        if (!passwordInput || !confirmPasswordInput) return;
+        if (passwordInput.value === confirmPasswordInput.value) {
+            passwordMatchFeedbackDiv.textContent = '비밀번호가 일치합니다.';
+            passwordMatchFeedbackDiv.style.color = 'green';
+        } else {
+            passwordMatchFeedbackDiv.textContent = '비밀번호가 일치하지 않습니다.';
+            passwordMatchFeedbackDiv.style.color = 'red';
+        }
+    }
+
+    if (passwordInput) {
+        passwordInput.addEventListener('input', () => {
+            const pw = passwordInput.value;
+            updateFeedback(lengthFeedback, pw.length >= 8 && pw.length <= 16);
+            updateFeedback(uppercaseFeedback, /[A-Z]/.test(pw));
+            updateFeedback(lowercaseFeedback, /[a-z]/.test(pw));
+            updateFeedback(numberFeedback, /\d/.test(pw));
+            updateFeedback(specialCharFeedback, /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(pw));
+            checkPasswordMatch();
+        });
+    }
+
+    if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+    }
+
+    /** -------------------- 5. 비밀번호 보이기/숨기기 -------------------- **/
+    function setupPasswordToggle(toggleButtonId, passwordFieldId) {
+        const toggleButton = document.getElementById(toggleButtonId);
+        const passwordField = document.getElementById(passwordFieldId);
+        if (toggleButton && passwordField) {
+            toggleButton.addEventListener('click', () => {
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                const icon = toggleButton.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('bi-eye');
+                    icon.classList.toggle('bi-eye-slash');
                 }
             });
         }
     }
-    setupPasswordToggle(togglePassword1, passwordField);
-    setupPasswordToggle(togglePassword2, confirmPasswordField);
+
+    setupPasswordToggle('togglePassword1', 'password');
+    setupPasswordToggle('togglePassword2', 'passwordConfirm');
 });
+햐
