@@ -102,11 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailCheckStatusInput = document.getElementById('emailCheckStatus');
     const registrationForm = document.getElementById('registrationForm');
 
+    // 3. 비밀번호 보이기/숨기기 토글 기능 (변동 없음, 기존 코드)
+    const togglePassword1 = document.getElementById('togglePassword1');
+    const passwordField = document.getElementById('password');
+    const togglePassword2 = document.getElementById('togglePassword2');
+    const confirmPasswordField = document.getElementById('PasswordConfirm');
     function toggleCustomEmailInput(show) {
         emailDomainInput.style.display = show ? 'inline-block' : 'none';
         if (!show) emailDomainInput.value = '';
     }
-
     function setEmailFieldsReadonly(isReadonly) {
         emailIdInput.readOnly = isReadonly;
         emailDomainInput.readOnly = isReadonly;
@@ -344,8 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-    }
-
-    setupPasswordToggle('togglePassword1', 'password');
-    setupPasswordToggle('togglePassword2', 'passwordConfirm');
+    setupPasswordToggle(togglePassword1, passwordField);
+    setupPasswordToggle(togglePassword2, confirmPasswordField);
 });
