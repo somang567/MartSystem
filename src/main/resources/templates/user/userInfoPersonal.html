@@ -132,7 +132,7 @@
                         <div class="input-group">
                             <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="9~12자 이내의 영문자+숫자+특수문자(!@#$) 조합" aria-label="비밀번호">
                             <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
-                                <i class="bi bi-eye-slash"><img src="/images/passwordEyes.svg" alt="" class="passwordEyesIcon"></i> </button>
+                                <img src="/images/passwordEyes.svg" alt="" class="passwordEyesIcon"></button>
                         </div>
                         <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                         <div id="passwordValidationFeedback" class="mt-2">
@@ -149,7 +149,7 @@
                         <div class="input-group">
                             <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}" placeholder="비밀번호 재입력" aria-label="비밀번호확인">
                             <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
-                                <i class="bi bi-eye-slash"><img src="/images/passwordEyes.svg" alt="" class="passwordEyesIcon"></i></button>
+                                <img src="/images/passwordEyes.svg" alt="" class="passwordEyesIcon"></button>
                         </div>
                         <div class="text-danger" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></div>
                         <div class="text-danger" th:if="${errorMessage != null and errorMessage.contains('비밀번호와 비밀번호 확인이 일치하지 않습니다.')}" th:text="${errorMessage}"></div>
