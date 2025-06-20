@@ -52,6 +52,9 @@ public class UserServiceImpl implements UserService {
 		log.info("User role: {}, email: {}, nickname: {}, agreedToTerms: {}, agreedToPrivacy: {}, agreedToMarketing: {}",
 				dto.getRole(), dto.getEmail(), dto.getNickname(), dto.getAgreedToTerms(), dto.getAgreedToPrivacy(), dto.getAgreedToMarketing());
 
+		// --- 여기 아래에 contactPersonName 값 로그 추가 ---
+		log.info("Debugging: DTO contactPersonName received: '{}'", dto.getContactPersonName());
+
 		// 공통 유효성 검사
 		if (checkEmailDuplication(dto.getEmail())) {
 			log.warn("Email duplication detected: {}", dto.getEmail());
@@ -116,16 +119,19 @@ public class UserServiceImpl implements UserService {
 				if (dto.getRole() == UserRole.PRODUCER) {
 					Producer producer = modelMapper.map(dto, Producer.class);
 					producer.setPassword(encodedPassword);
+					producer.setContactPersonName(dto.getContactPersonName()); // 추가
 					newUser = producer;
 					log.info("Mapping DTO to Producer for email: {}", dto.getEmail());
 				} else if (dto.getRole() == UserRole.MART) {
 					Mart mart = modelMapper.map(dto, Mart.class);
 					mart.setPassword(encodedPassword);
+					mart.setContactPersonName(dto.getContactPersonName()); // 추가
 					newUser = mart;
 					log.info("Mapping DTO to Mart for email: {}", dto.getEmail());
 				} else { // DISTRIBUTOR
 					Distributor distributor = modelMapper.map(dto, Distributor.class);
 					distributor.setPassword(encodedPassword);
+					distributor.setContactPersonName(dto.getContactPersonName()); // 추가
 					newUser = distributor;
 					log.info("Mapping DTO to Distributor for email: {}", dto.getEmail());
 				}

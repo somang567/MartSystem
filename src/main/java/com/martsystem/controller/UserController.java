@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -114,8 +115,20 @@ public class UserController {
 
 		// 유효성 검사 (Spring Validator가 처리)
 		if (bindingResult.hasErrors()) {
-			// 유효성 검사 실패 시, DTO와 BindingResult를 Model에 담아 현재 폼 페이지로 돌아갑니다.
-			// 이렇게 하면 사용자가 입력한 값과 오류 메시지가 그대로 유지됩니다.
+			System.out.println("---- 서버 측 유효성 검사 오류 ----");
+			bindingResult.getAllErrors().forEach(error -> {
+				if (error instanceof FieldError) {
+					FieldError fieldError = (FieldError) error;
+					System.out.println("  Field: " + fieldError.getField() +
+							", RejectedValue: '" + fieldError.getRejectedValue() + "'" +
+							", Message: " + fieldError.getDefaultMessage());
+				} else {
+					System.out.println("  Global Error: " + error.getDefaultMessage());
+				}
+			});
+			System.out.println("--- 서버 측 유효성 검사 오류 상세 끝 ---");
+
+
 			model.addAttribute("registrationDto", dto);
 			// bindingResult는 model.addAttribute("registrationDto", dto) 시 자동으로 함께 모델에 추가됩니다.
 			// 따라서 "org.springframework.validation.BindingResult.registrationDto"를 수동으로 추가할 필요 없음.

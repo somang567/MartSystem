@@ -40,10 +40,6 @@ public class Distributor extends User { // User 추상 클래스를 상속받습
 	@Column(name = "business_category", nullable = false, length = 50)
 	private String businessCategory;
 
-	// 업무 담당자명 (가입 양식: 업무 담당자명)
-	@Column(name = "contact_person_name", nullable = false, length = 50)
-	private String contactPersonName;
-
 	// 사업장 번호 (가입 양식: 사업장 번호 (선택))
 	@Column(name = "business_workplace_number", length = 50)
 	private String businessWorkplaceNumber;

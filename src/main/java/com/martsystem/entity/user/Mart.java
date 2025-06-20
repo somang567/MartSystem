@@ -34,9 +34,6 @@ public class Mart extends User { // User 추상 클래스를 상속받습니다.
 	@Column(name = "business_detail_address", nullable = false, length = 255)
 	private String businessDetailAddress;
 
-	@Column(name = "contact_person_name", nullable = false, length = 50)
-	private String contactPersonName;
-
 	@Column(name = "mart_phone_number", length = 20)
 	private String martPhoneNumber;
 }
