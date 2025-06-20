@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    /** ------------------------------ 1. 카카오 주소 검색 API 연동 ------------------------------ **/
+    /** -------------------- 1. 카카오 주소 검색 API 연동 -------------------- **/
     const btnSearchBusinessAddress = document.getElementById('btnSearchBusinessAddress');
     const addressSearchModal = document.getElementById('addressSearchModal');
     const addressSearchContainer = document.getElementById('addressSearchContainer');
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!cleanBusinessNumber || cleanBusinessNumber.length !== 10 || isNaN(cleanBusinessNumber)) {
                 businessVerificationResultDiv.style.color = 'red';
-                businessVerificationResultDiv.textContent = '유효한 사업자등록번호를 입력해주세요.';
+                businessVerificationResultDiv.textContent = '유효한 10자리 숫자로 된 사업자등록번호를 입력해주세요.';
                 return;
             }
 
@@ -92,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /** ------------------------------ 3. 이메일 입력 처리 및 중복 검사 ------------------------------ **/
+    /** -------------------- 3. 이메일 입력 및 중복 검사 -------------------- **/
     const emailIdInput = document.getElementById('emailId');
     const emailDomainInput = document.getElementById('emailDomainInput');
     const emailDomainSelect = document.getElementById('emailDomainSelect');
@@ -102,29 +101,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailCheckStatusInput = document.getElementById('emailCheckStatus');
     const registrationForm = document.getElementById('registrationForm');
 
-    // 3. 비밀번호 보이기/숨기기 토글 기능 (변동 없음, 기존 코드)
-    const togglePassword1 = document.getElementById('togglePassword1');
-    const passwordField = document.getElementById('password');
-    const togglePassword2 = document.getElementById('togglePassword2');
-    const confirmPasswordField = document.getElementById('PasswordConfirm');
     function toggleCustomEmailInput(show) {
         emailDomainInput.style.display = show ? 'inline-block' : 'none';
         if (!show) emailDomainInput.value = '';
     }
+
     function setEmailFieldsReadonly(isReadonly) {
         emailIdInput.readOnly = isReadonly;
         emailDomainInput.readOnly = isReadonly;
         emailDomainSelect.disabled = isReadonly;
         btnCheckId.disabled = isReadonly;
 
-        const readonlyBgColor = '#e9ecef'; // 회색 배경
-        const defaultBgColor = ''; // 기본 배경
+        const bgColor = isReadonly ? '#e9ecef' : '';
+        emailIdInput.style.backgroundColor = bgColor;
+        emailDomainInput.style.backgroundColor = bgColor;
+        emailDomainSelect.style.backgroundColor = bgColor;
 
-        emailIdInput.style.backgroundColor = isReadonly ? readonlyBgColor : defaultBgColor;
-        emailDomainInput.style.backgroundColor = isReadonly ? readonlyBgColor : defaultBgColor;
-        emailDomainSelect.style.backgroundColor = isReadonly ? readonlyBgColor : defaultBgColor;
-
-        // is-valid 클래스를 토글하여 Bootstrap의 유효성 피드백 스타일 적용 (녹색 테두리 등)
         emailIdInput.classList.toggle('is-valid', isReadonly);
         emailDomainInput.classList.toggle('is-valid', isReadonly && emailDomainInput.style.display !== 'none');
         emailDomainSelect.classList.toggle('is-valid', isReadonly);
@@ -139,23 +131,28 @@ document.addEventListener('DOMContentLoaded', () => {
         setEmailFieldsReadonly(false);
     }
 
+    function onEmailDomainSelectChange() {
+        toggleCustomEmailInput(emailDomainSelect.value === 'custom');
+        updateHiddenEmailField();
+    }
+
     function initializeEmailDomain() {
         const initialEmail = hiddenEmailInput.value;
         let initialDomain = '';
         if (initialEmail && initialEmail.includes('@')) {
-            initialDomain = initialEmail.substring(initialEmail.indexOf('@') + 1);
+            initialDomain = initialEmail.split('@')[1];
         }
 
-        let foundPredefinedDomain = false;
-        for (let i = 0; i < emailDomainSelect.options.length; i++) {
-            if (emailDomainSelect.options[i].value === initialDomain) {
+        let found = false;
+        for (let option of emailDomainSelect.options) {
+            if (option.value === initialDomain) {
                 emailDomainSelect.value = initialDomain;
-                foundPredefinedDomain = true;
+                found = true;
                 break;
             }
         }
 
-        if (!foundPredefinedDomain || !initialDomain) {
+        if (!found || !initialDomain) {
             emailDomainSelect.value = 'custom';
             toggleCustomEmailInput(true);
             emailDomainInput.value = initialDomain || '';
@@ -167,27 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (initialEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(initialEmail)) {
             setEmailFieldsReadonly(true);
-            emailDuplicationMessageDiv.textContent = '이메일 정보가 이미 입력되어 있습니다. 수정이 필요하면 필드를 변경하거나 관리자에게 문의하세요.';
+            emailDuplicationMessageDiv.textContent = '이메일 정보가 이미 입력되어 있습니다.';
             emailDuplicationMessageDiv.style.color = 'gray';
             emailCheckStatusInput.value = 'available';
-        } else {
-            setEmailFieldsReadonly(false);
-            emailCheckStatusInput.value = 'unchecked';
         }
     }
 
-    if (emailIdInput && emailDomainInput && emailDomainSelect && hiddenEmailInput && btnCheckId && emailDuplicationMessageDiv && emailCheckStatusInput) {
+    if (emailIdInput && emailDomainInput && emailDomainSelect && hiddenEmailInput) {
         emailIdInput.addEventListener('input', updateHiddenEmailField);
         emailDomainInput.addEventListener('input', updateHiddenEmailField);
-        emailDomainSelect.addEventListener('change', onEmailDomainSelectChange); // JS에서 이벤트 리스너 등록
-
-        // 페이지 로드 시 초기화 함수 호출
+        emailDomainSelect.addEventListener('change', onEmailDomainSelectChange);
         initializeEmailDomain();
-    }
-
-    function onEmailDomainSelectChange() {
-        toggleCustomEmailInput(emailDomainSelect.value === 'custom');
-        updateHiddenEmailField();
     }
 
     if (btnCheckId) {
@@ -198,45 +185,36 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!email) {
                 emailDuplicationMessageDiv.textContent = '이메일 주소를 입력해주세요.';
                 emailDuplicationMessageDiv.style.color = 'red';
-                emailCheckStatusInput.value = 'unchecked';
                 return;
             }
 
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email)) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 emailDuplicationMessageDiv.textContent = '유효한 이메일 형식이 아닙니다.';
                 emailDuplicationMessageDiv.style.color = 'red';
-                emailCheckStatusInput.value = 'unchecked';
                 return;
             }
 
             try {
-                const response = await fetch('/api/checkEmailDuplication', {
+                const res = await fetch('/api/checkEmailDuplication', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
                 });
-
-                const data = await response.json();
-
-                if (response.ok && data.duplicated) {
-                    emailDuplicationMessageDiv.textContent = '이미 사용 중인 이메일입니다. 다른 이메일을 사용해주세요.';
+                const data = await res.json();
+                if (res.ok && data.duplicated) {
+                    emailDuplicationMessageDiv.textContent = '이미 사용 중인 이메일입니다.';
                     emailDuplicationMessageDiv.style.color = 'red';
                     setEmailFieldsReadonly(false);
                     emailCheckStatusInput.value = 'duplicated';
-                } else if (response.ok && !data.duplicated) {
+                } else {
                     emailDuplicationMessageDiv.textContent = '사용 가능한 이메일입니다.';
                     emailDuplicationMessageDiv.style.color = 'green';
                     setEmailFieldsReadonly(true);
                     emailCheckStatusInput.value = 'available';
-                } else {
-                    throw new Error('서버 오류');
                 }
-            } catch (error) {
+            } catch (err) {
                 emailDuplicationMessageDiv.textContent = '중복 확인 중 오류가 발생했습니다.';
                 emailDuplicationMessageDiv.style.color = 'red';
-                setEmailFieldsReadonly(false);
-                emailCheckStatusInput.value = 'unchecked';
             }
         });
     }
@@ -245,94 +223,62 @@ document.addEventListener('DOMContentLoaded', () => {
         registrationForm.addEventListener('submit', (event) => {
             if (emailCheckStatusInput.value !== 'available') {
                 event.preventDefault();
-                emailDuplicationMessageDiv.textContent = '이메일 중복 확인을 완료하고 사용 가능한 이메일인지 확인해야 합니다.';
+                emailDuplicationMessageDiv.textContent = '이메일 중복 확인을 완료해주세요.';
                 emailDuplicationMessageDiv.style.color = 'red';
                 alert('이메일 중복 확인을 완료해주세요.');
             }
         });
     }
 
-    /** ------------------------------ 4. 비밀번호 보이기/숨기기 & 유효성 검사 ------------------------------ **/
+    /** -------------------- 4. 비밀번호 입력 및 확인 -------------------- **/
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('passwordConfirm');
-    const passwordMatchFeedbackDiv = document.getElementById('passwordMatchFeedback'); // 비밀번호 일치 피드백 div
-    const passwordValidationFeedbackDiv = document.getElementById('passwordValidationFeedback'); // 비밀번호 유효성 피드백 div
-
-    // 각 피드백 요소들을 직접 참조합니다.
+    const passwordMatchFeedbackDiv = document.getElementById('passwordMatchFeedback');
     const lengthFeedback = document.getElementById('lengthFeedback');
     const uppercaseFeedback = document.getElementById('uppercaseFeedback');
     const lowercaseFeedback = document.getElementById('lowercaseFeedback');
     const numberFeedback = document.getElementById('numberFeedback');
     const specialCharFeedback = document.getElementById('specialCharFeedback');
 
-    // 개별 피드백 항목 업데이트 함수
-    const updateFeedback = (element, isValid) => {
-        if (!element) {
-            // console.warn(`Feedback element not found: ${element ? element.id : 'unknown'}`); // 디버깅 로그 제거
-            return;
-        }
-        const icon = element.querySelector('i');
-
-        // 텍스트 색상 변경 (!important 추가하여 강제 적용)
-        element.style.setProperty('color', isValid ? 'green' : 'red', 'important');
-
+    function updateFeedback(el, valid) {
+        if (!el) return;
+        const icon = el.querySelector('i');
+        el.style.setProperty('color', valid ? 'green' : 'red', 'important');
         if (icon) {
-            icon.classList.toggle('bi-x-circle-fill', !isValid);
-            icon.classList.toggle('bi-check-circle-fill', isValid);
-            // 아이콘 색상도 텍스트 색상과 동일하게 강제 적용
-            icon.style.setProperty('color', isValid ? 'green' : 'red', 'important');
-        } else {
-            // console.warn(`Icon element (<i>) not found inside: ${element.id}`); // 디버깅 로그 제거
+            icon.classList.toggle('bi-check-circle-fill', valid);
+            icon.classList.toggle('bi-x-circle-fill', !valid);
+            icon.style.setProperty('color', valid ? 'green' : 'red', 'important');
         }
-        // console.log(`Feedback for ${element.id}: isValid=${isValid}, color=${element.style.color}`); // 디버깅 로그 제거
-    };
+    }
 
-    // 비밀번호 유효성 검사 (실시간)
-    if (passwordInput && passwordValidationFeedbackDiv) {
+    function checkPasswordMatch() {
+        if (!passwordInput || !confirmPasswordInput) return;
+        if (passwordInput.value === confirmPasswordInput.value) {
+            passwordMatchFeedbackDiv.textContent = '비밀번호가 일치합니다.';
+            passwordMatchFeedbackDiv.style.color = 'green';
+        } else {
+            passwordMatchFeedbackDiv.textContent = '비밀번호가 일치하지 않습니다.';
+            passwordMatchFeedbackDiv.style.color = 'red';
+        }
+    }
+
+    if (passwordInput) {
         passwordInput.addEventListener('input', () => {
-            const password = passwordInput.value;
-
-            const isLengthValid = password.length >= 8 && password.length <= 16;
-            updateFeedback(lengthFeedback, isLengthValid);
-
-            const isUppercaseValid = /[A-Z]/.test(password);
-            updateFeedback(uppercaseFeedback, isUppercaseValid);
-
-            const isLowercaseValid = /[a-z]/.test(password);
-            updateFeedback(lowercaseFeedback, isLowercaseValid);
-
-            const isNumberValid = /[0-9]/.test(password);
-            updateFeedback(numberFeedback, isNumberValid);
-
-            const isSpecialCharValid = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(password);
-            updateFeedback(specialCharFeedback, isSpecialCharValid);
-
+            const pw = passwordInput.value;
+            updateFeedback(lengthFeedback, pw.length >= 8 && pw.length <= 16);
+            updateFeedback(uppercaseFeedback, /[A-Z]/.test(pw));
+            updateFeedback(lowercaseFeedback, /[a-z]/.test(pw));
+            updateFeedback(numberFeedback, /\d/.test(pw));
+            updateFeedback(specialCharFeedback, /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(pw));
             checkPasswordMatch();
         });
     }
 
-    // 비밀번호 일치 여부 확인
-    if (passwordInput && confirmPasswordInput && passwordMatchFeedbackDiv) {
-        const checkPasswordMatch = () => {
-            if (passwordInput.value.length === 0 && confirmPasswordInput.value.length === 0) {
-                passwordMatchFeedbackDiv.textContent = ''; // 둘 다 비어있으면 메시지 없음
-                passwordMatchFeedbackDiv.style.color = ''; // 색상 초기화
-            } else if (passwordInput.value === confirmPasswordInput.value) {
-                passwordMatchFeedbackDiv.textContent = '비밀번호가 일치합니다.';
-                passwordMatchFeedbackDiv.style.color = 'green';
-            } else {
-                passwordMatchFeedbackDiv.textContent = '비밀번호가 일치하지 않습니다.';
-                passwordMatchFeedbackDiv.style.color = 'red';
-            }
-        };
-        // 비밀번호 또는 확인 비밀번호 입력 시마다 체크
-        passwordInput.addEventListener('input', checkPasswordMatch);
+    if (confirmPasswordInput) {
         confirmPasswordInput.addEventListener('input', checkPasswordMatch);
-        // 초기 로드 시 한 번 실행
-        checkPasswordMatch();
     }
 
-    // 비밀번호 보이기/숨기기 토글
+    /** -------------------- 5. 비밀번호 보이기/숨기기 -------------------- **/
     function setupPasswordToggle(toggleButtonId, passwordFieldId) {
         const toggleButton = document.getElementById(toggleButtonId);
         const passwordField = document.getElementById(passwordFieldId);
@@ -340,7 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleButton.addEventListener('click', () => {
                 const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordField.setAttribute('type', type);
-
                 const icon = toggleButton.querySelector('i');
                 if (icon) {
                     icon.classList.toggle('bi-eye');
@@ -348,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-    setupPasswordToggle(togglePassword1, passwordField);
-    setupPasswordToggle(togglePassword2, confirmPasswordField);
+    }
+    setupPasswordToggle('togglePassword1', 'password');
+    setupPasswordToggle('togglePassword2', 'passwordConfirm');
 });
