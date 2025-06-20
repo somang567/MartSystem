@@ -14,13 +14,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "producers")
 @Getter @Setter @NoArgsConstructor
 public class Producer extends User {
-	// --- 가입 양식과 매핑되는 필드들 ---
-	// 사업자등록번호 (가입 양식: 사업자등록번호 *)
-	// 사업장 주소 (가입 양식: 사업장 주소 * - 주소 API로 입력)
-	// 우편번호
-	// 도로명 주소
-	// 상세 주소 (사용자 직접 입력)
-	// 업체명 (가입 양식: 업체명 *)
 
 	@Column(name = "business_registration_number", nullable = false, unique = true, length = 20)
 	private String businessRegistrationNumber;
@@ -41,9 +34,6 @@ public class Producer extends User {
 	@Column(name = "ceo_name", nullable = false, length = 50)
 	private String ceoName;
 
-	// 업무 담당자명 (가입 양식: 업무 담당자명)
-	@Column(name = "contact_person_name", nullable = false, length = 50)
-	private String contactPersonName;
 
 	// 사업장 번호 (가입 양식: 사업장 번호 (선택))
 	@Column(name = "business_workplace_number", length = 50)
