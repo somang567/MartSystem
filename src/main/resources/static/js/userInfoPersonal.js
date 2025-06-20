@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const togglePassword1 = document.getElementById('togglePassword1');
     const passwordField = document.getElementById('password');
     const togglePassword2 = document.getElementById('togglePassword2');
-    const confirmPasswordField = document.getElementById('confirmPassword');
+    const confirmPasswordField = document.getElementById('PasswordConfirm');
 
     function setupPasswordToggle(toggleButton, passwordInput) {
         if (toggleButton && passwordInput) {
@@ -176,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-
     setupPasswordToggle(togglePassword1, passwordField);
     setupPasswordToggle(togglePassword2, confirmPasswordField);
 });
